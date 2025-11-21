@@ -13,7 +13,7 @@ const DashboardNew = () => {
     <div className="min-h-screen bg-gray-50">
       <BNPNavigation />
 
-      <div className="max-w-7xl mx-auto p-8 space-y-8">
+      <div className="max-w-7xl mx-auto p-8 space-y-8 pt-28">
         {/* Section Graphique de Portefeuille */}
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="flex items-center justify-between mb-6">
