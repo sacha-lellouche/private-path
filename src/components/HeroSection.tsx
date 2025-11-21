@@ -20,8 +20,8 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-6 text-center">
         <div className="max-w-5xl mx-auto space-y-16">
           {/* Main Heading */}
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-bnp-gold leading-[1.1] tracking-tight uppercase">
-            INVESTISSEZ
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-background leading-[1.2] tracking-wide uppercase">
+            Investissez
           </h1>
 
           {/* CTA Button */}
