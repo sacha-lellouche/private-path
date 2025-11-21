@@ -98,61 +98,95 @@ const OnboardingJourney = () => {
       {/* Progress Indicator */}
       <div className="fixed top-6 right-6 z-50">
         <div className="flex items-center gap-2 bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border">
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "game1" ? "bg-bnp-gold text-bnp-green" : "bg-bnp-green text-background"
-          }`}>
+          <button 
+            onClick={() => setStep("game1")}
+            disabled={step === "game1"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step === "game1" ? "bg-bnp-gold text-bnp-green" : "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer"
+            } disabled:cursor-default`}
+          >
             1
-          </div>
+          </button>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
               step !== "game1" ? "w-full" : "w-0"
             }`} />
           </div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "game2" ? "bg-bnp-gold text-bnp-green" : (step === "questionnaire" || step === "results" || step === "login" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
-          }`}>
+          <button
+            onClick={() => {
+              if (step !== "game1") setStep("game2");
+            }}
+            disabled={step === "game1"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step === "game2" ? "bg-bnp-gold text-bnp-green" : (step === "questionnaire" || step === "results" || step === "choice" || step === "login" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
+            } disabled:cursor-not-allowed`}
+          >
             2
-          </div>
+          </button>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
-              step === "questionnaire" || step === "results" || step === "login" ? "w-full" : "w-0"
+              step === "questionnaire" || step === "results" || step === "choice" || step === "login" ? "w-full" : "w-0"
             }`} />
           </div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "questionnaire" ? "bg-bnp-gold text-bnp-green" : (step === "results" || step === "login" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
-          }`}>
+          <button
+            onClick={() => {
+              if (step !== "game1" && step !== "game2") setStep("questionnaire");
+            }}
+            disabled={step === "game1" || step === "game2"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step === "questionnaire" ? "bg-bnp-gold text-bnp-green" : (step === "results" || step === "choice" || step === "login" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
+            } disabled:cursor-not-allowed`}
+          >
             3
-          </div>
+          </button>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
-              step === "results" || step === "login" ? "w-full" : "w-0"
+              step === "results" || step === "choice" || step === "login" ? "w-full" : "w-0"
             }`} />
           </div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "results" ? "bg-bnp-gold text-bnp-green" : (step === "choice" || step === "login" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
-          }`}>
+          <button
+            onClick={() => {
+              if (step !== "game1" && step !== "game2" && step !== "questionnaire") setStep("results");
+            }}
+            disabled={step === "game1" || step === "game2" || step === "questionnaire"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step === "results" ? "bg-bnp-gold text-bnp-green" : (step === "choice" || step === "login" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
+            } disabled:cursor-not-allowed`}
+          >
             4
-          </div>
+          </button>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
               step === "choice" || step === "login" ? "w-full" : "w-0"
             }`} />
           </div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "choice" ? "bg-bnp-gold text-bnp-green" : (step === "login" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
-          }`}>
+          <button
+            onClick={() => {
+              if (step !== "game1" && step !== "game2" && step !== "questionnaire" && step !== "results") setStep("choice");
+            }}
+            disabled={step === "game1" || step === "game2" || step === "questionnaire" || step === "results"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step === "choice" ? "bg-bnp-gold text-bnp-green" : (step === "login" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
+            } disabled:cursor-not-allowed`}
+          >
             5
-          </div>
+          </button>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
               step === "login" ? "w-full" : "w-0"
             }`} />
           </div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "login" ? "bg-bnp-gold text-bnp-green" : "bg-muted text-muted-foreground"
-          }`}>
+          <button
+            onClick={() => {
+              if (step !== "game1" && step !== "game2" && step !== "questionnaire" && step !== "results" && step !== "choice") setStep("login");
+            }}
+            disabled={step === "game1" || step === "game2" || step === "questionnaire" || step === "results" || step === "choice"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step === "login" ? "bg-bnp-gold text-bnp-green" : "bg-muted text-muted-foreground"
+            } disabled:cursor-not-allowed`}
+          >
             6
-          </div>
+          </button>
         </div>
       </div>
 
