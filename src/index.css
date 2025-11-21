@@ -8,79 +8,82 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 150 60% 15%;
+    --background: 0 0% 100%;
+    --foreground: 160 30% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 150 60% 15%;
+    --card-foreground: 160 30% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 150 60% 15%;
+    --popover-foreground: 160 30% 15%;
 
-    --primary: 150 60% 20%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 160 30% 15%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 150 20% 85%;
-    --secondary-foreground: 150 60% 15%;
+    --secondary: 160 10% 92%;
+    --secondary-foreground: 160 30% 15%;
 
-    --muted: 150 20% 95%;
-    --muted-foreground: 150 15% 45%;
+    --muted: 160 10% 96%;
+    --muted-foreground: 160 10% 45%;
 
-    --accent: 45 85% 55%;
-    --accent-foreground: 150 60% 15%;
+    --accent: 38 90% 50%;
+    --accent-foreground: 160 30% 15%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 150 20% 88%;
-    --input: 150 20% 88%;
-    --ring: 150 60% 20%;
+    --border: 160 10% 88%;
+    --input: 160 10% 88%;
+    --ring: 160 30% 15%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --bnp-green: 150 60% 20%;
-    --bnp-green-light: 150 50% 35%;
-    --bnp-gold: 45 85% 55%;
-    --bnp-gold-light: 45 85% 70%;
+    --bnp-green: 160 30% 15%;
+    --bnp-green-dark: 160 40% 12%;
+    --bnp-green-light: 160 25% 25%;
+    --bnp-gold: 38 90% 50%;
+    --bnp-gold-light: 38 85% 60%;
+    --navy: 210 45% 20%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(150 60% 20%) 0%, hsl(150 50% 35%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 85% 55%) 0%, hsl(45 85% 70%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(150 20% 95%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(160 40% 12%) 0%, hsl(160 30% 15%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 90% 50%) 0%, hsl(38 85% 60%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(160 40% 12%) 0%, hsl(160 25% 18%) 50%, hsl(160 30% 15%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(160 10% 96%) 100%);
     
-    --shadow-elegant: 0 10px 40px -10px hsl(150 60% 20% / 0.2);
-    --shadow-glow: 0 0 40px hsl(45 85% 55% / 0.3);
+    --shadow-elegant: 0 4px 20px -2px hsl(160 30% 15% / 0.15);
+    --shadow-glow: 0 0 30px hsl(38 90% 50% / 0.3);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 150 60% 15%;
-    --foreground: 0 0% 98%;
+    --background: 160 30% 15%;
+    --foreground: 0 0% 100%;
 
-    --card: 150 50% 20%;
-    --card-foreground: 0 0% 98%;
+    --card: 160 25% 20%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 150 50% 20%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 160 25% 20%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 45 85% 55%;
-    --primary-foreground: 150 60% 15%;
+    --primary: 38 90% 50%;
+    --primary-foreground: 160 30% 15%;
 
-    --secondary: 150 40% 30%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 160 20% 25%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 150 40% 25%;
-    --muted-foreground: 150 20% 70%;
+    --muted: 160 20% 22%;
+    --muted-foreground: 160 10% 70%;
 
-    --accent: 45 85% 55%;
-    --accent-foreground: 150 60% 15%;
+    --accent: 38 90% 50%;
+    --accent-foreground: 160 30% 15%;
 
     --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 150 40% 30%;
-    --input: 150 40% 30%;
-    --ring: 45 85% 55%;
+    --border: 160 20% 30%;
+    --input: 160 20% 30%;
+    --ring: 38 90% 50%;
   }
 }
 
@@ -91,5 +94,11 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
   }
 }
