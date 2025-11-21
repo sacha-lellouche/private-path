@@ -52,10 +52,10 @@ const ProductsSection = () => {
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-          <Badge className="mb-4 bg-gold/10 text-gold border-gold/20">
+          <Badge className="mb-4 bg-bnp-gold/10 text-bnp-gold border-bnp-gold/20">
             Nos Solutions d'Investissement
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold text-navy mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Des opportunités sur mesure
           </h2>
           <p className="text-lg text-muted-foreground">
@@ -81,7 +81,7 @@ const ProductsSection = () => {
                     {product.horizon}
                   </Badge>
                 </div>
-                <CardTitle className="text-2xl mt-4 group-hover:text-gold transition-colors">
+                <CardTitle className="text-2xl mt-4 group-hover:text-bnp-gold transition-colors">
                   {product.title}
                 </CardTitle>
                 <CardDescription className="text-base">
@@ -94,7 +94,7 @@ const ProductsSection = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Rendement annuel</p>
-                      <p className="text-2xl font-bold text-gold">{product.return}</p>
+                      <p className="text-2xl font-bold text-bnp-gold">{product.return}</p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Niveau de risque</p>
@@ -104,7 +104,7 @@ const ProductsSection = () => {
                             key={i}
                             className={`h-2 w-full rounded-full ${
                               i < product.risk 
-                                ? 'bg-gold' 
+                                ? 'bg-bnp-gold' 
                                 : 'bg-muted'
                             }`}
                           />
@@ -116,7 +116,7 @@ const ProductsSection = () => {
                   {/* CTA */}
                   <Button 
                     variant="ghost" 
-                    className="w-full justify-between group/btn hover:bg-navy/5"
+                    className="w-full justify-between group/btn hover:bg-primary/5"
                   >
                     En savoir plus
                     <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />

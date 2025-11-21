@@ -1,54 +1,79 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Target, TrendingUp, AlertTriangle, Award } from "lucide-react";
 
 const RiskGameSection = () => {
-  const [balloonSize, setBalloonSize] = useState(20);
+  const [balloonSize, setBalloonSize] = useState(30);
   const [isInflating, setIsInflating] = useState(false);
   const [hasPopped, setHasPopped] = useState(false);
   const [potentialReturn, setPotentialReturn] = useState(5);
   const [riskLevel, setRiskLevel] = useState<"Conservateur" | "Équilibré" | "Audacieux" | null>(null);
   const [gameStarted, setGameStarted] = useState(false);
+  const [inflationTime, setInflationTime] = useState(0);
+  const inflationTimeRef = useRef(0);
+  const startTimeRef = useRef(0);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     
     if (isInflating && !hasPopped) {
+      if (startTimeRef.current === 0) {
+        startTimeRef.current = Date.now();
+      }
+
       interval = setInterval(() => {
         setBalloonSize((prev) => {
-          const newSize = prev + 2;
-          setPotentialReturn(Math.round(5 + (newSize - 20) * 0.5));
+          const newSize = prev + 3;
+          const returnRate = Math.round(5 + (newSize - 30) * 0.4);
+          setPotentialReturn(returnRate);
           
-          // Random pop based on size (higher chance as balloon grows)
-          const popChance = Math.min((newSize - 20) / 150, 0.95);
-          if (Math.random() < popChance * 0.05) {
+          // Calcul du temps d'inflation
+          inflationTimeRef.current = (Date.now() - startTimeRef.current) / 1000;
+          
+          // Chance de pop progressive: augmente significativement avec la taille
+          const sizeRatio = (newSize - 30) / 170; // 0 à 1
+          const popChance = Math.pow(sizeRatio, 2) * 0.08; // Courbe exponentielle
+          
+          if (Math.random() < popChance) {
             setHasPopped(true);
             setIsInflating(false);
-            calculateRiskProfile(newSize);
+            setInflationTime(inflationTimeRef.current);
+            calculateRiskProfile(newSize, inflationTimeRef.current);
             return prev;
           }
           
+          // Limite maximale
           if (newSize >= 200) {
             setHasPopped(true);
             setIsInflating(false);
-            calculateRiskProfile(newSize);
+            setInflationTime(inflationTimeRef.current);
+            calculateRiskProfile(200, inflationTimeRef.current);
             return 200;
           }
           
           return newSize;
         });
-      }, 50);
+      }, 60);
     }
     
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isInflating, hasPopped]);
 
-  const calculateRiskProfile = (size: number) => {
-    if (size < 80) {
+  const calculateRiskProfile = (finalSize: number, timeInflated: number) => {
+    // Calcul basé sur la taille finale ET le temps d'inflation
+    const sizeScore = finalSize;
+    const timeScore = timeInflated * 10; // Plus on maintient longtemps, plus on est audacieux
+    const totalScore = sizeScore + timeScore;
+    
+    console.log("Profile calculation:", { finalSize, timeInflated, totalScore });
+    
+    if (totalScore < 100) {
       setRiskLevel("Conservateur");
-    } else if (size < 140) {
+    } else if (totalScore < 180) {
       setRiskLevel("Équilibré");
     } else {
       setRiskLevel("Audacieux");
@@ -56,25 +81,32 @@ const RiskGameSection = () => {
   };
 
   const handleStartInflating = () => {
-    if (!gameStarted) setGameStarted(true);
+    if (!gameStarted) {
+      setGameStarted(true);
+    }
     setIsInflating(true);
   };
 
   const handleStopInflating = () => {
     setIsInflating(false);
-    if (balloonSize > 20 && !hasPopped) {
-      calculateRiskProfile(balloonSize);
+    if (balloonSize > 30 && !hasPopped) {
+      const currentTime = (Date.now() - startTimeRef.current) / 1000;
+      setInflationTime(currentTime);
+      calculateRiskProfile(balloonSize, currentTime);
       setHasPopped(true);
     }
   };
 
   const resetGame = () => {
-    setBalloonSize(20);
+    setBalloonSize(30);
     setIsInflating(false);
     setHasPopped(false);
     setPotentialReturn(5);
     setRiskLevel(null);
     setGameStarted(true);
+    setInflationTime(0);
+    inflationTimeRef.current = 0;
+    startTimeRef.current = 0;
   };
 
   const getBalloonColor = () => {
@@ -92,11 +124,36 @@ const RiskGameSection = () => {
     return descriptions[level as keyof typeof descriptions];
   };
 
+  const getRiskStats = (level: string) => {
+    const stats = {
+      "Conservateur": { size: balloonSize, time: inflationTime.toFixed(1), score: "Prudent" },
+      "Équilibré": { size: balloonSize, time: inflationTime.toFixed(1), score: "Mesuré" },
+      "Audacieux": { size: balloonSize, time: inflationTime.toFixed(1), score: "Dynamique" }
+    };
+    return stats[level as keyof typeof stats];
+  };
+
   return (
-    <section className="py-24 bg-navy relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gold rounded-full blur-3xl animate-pulse" />
+    <section className="py-24 bg-primary relative overflow-hidden">
+      {/* Starry Background Effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-bnp-gold rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              opacity: Math.random() * 0.7 + 0.3,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Animated Background Glow */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-bnp-gold rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
@@ -104,7 +161,7 @@ const RiskGameSection = () => {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 animate-fade-in">
-            <Badge className="mb-4 bg-gold/20 text-gold border-gold/30">
+            <Badge className="mb-4 bg-bnp-gold/20 text-bnp-gold border-bnp-gold/30">
               <Target className="w-3 h-3 mr-2" />
               Évaluation Interactive
             </Badge>
@@ -119,7 +176,7 @@ const RiskGameSection = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Game Area */}
-            <Card className="p-8 bg-background/5 backdrop-blur-sm border-gold/20">
+            <Card className="p-8 bg-background/5 backdrop-blur-sm border-bnp-gold/20">
               <div className="flex flex-col items-center justify-center space-y-6">
                 {/* Balloon */}
                 <div className="relative h-80 flex items-center justify-center">
@@ -139,10 +196,15 @@ const RiskGameSection = () => {
                     <div className="text-center animate-scale-in">
                       {riskLevel && (
                         <div className="space-y-4">
-                          <Award className="w-20 h-20 text-gold mx-auto animate-pulse-glow" />
-                          <Badge className="text-lg px-4 py-2 bg-gold text-navy">
+                          <Award className="w-20 h-20 text-bnp-gold mx-auto animate-pulse-glow" />
+                          <Badge className="text-lg px-4 py-2 bg-bnp-gold text-primary">
                             {riskLevel}
                           </Badge>
+                          <div className="text-background/70 text-sm space-y-1">
+                            <p>Taille: {getRiskStats(riskLevel).size.toFixed(0)}px</p>
+                            <p>Temps: {getRiskStats(riskLevel).time}s</p>
+                            <p className="font-semibold text-bnp-gold">{getRiskStats(riskLevel).score}</p>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -187,47 +249,60 @@ const RiskGameSection = () => {
             <div className="space-y-6">
               {!riskLevel ? (
                 <>
-                  <div className="flex items-start gap-4 p-4 bg-background/5 backdrop-blur-sm rounded-lg border border-gold/20">
-                    <TrendingUp className="w-6 h-6 text-gold flex-shrink-0 mt-1" />
+                  <div className="flex items-start gap-4 p-4 bg-background/5 backdrop-blur-sm rounded-lg border border-bnp-gold/20">
+                    <TrendingUp className="w-6 h-6 text-bnp-gold flex-shrink-0 mt-1" />
                     <div>
                       <h3 className="font-semibold text-background mb-2">Objectif</h3>
                       <p className="text-background/70 text-sm">
-                        Gonflez le ballon pour augmenter le rendement potentiel, mais attention : plus vous gonflez, plus le risque d'éclatement augmente !
+                        Gonflez le ballon en maintenant le bouton. Plus vous gonflez longtemps et gros, plus le rendement augmente, mais le risque aussi !
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4 p-4 bg-background/5 backdrop-blur-sm rounded-lg border border-gold/20">
+                  <div className="flex items-start gap-4 p-4 bg-background/5 backdrop-blur-sm rounded-lg border border-bnp-gold/20">
                     <AlertTriangle className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
                     <div>
                       <h3 className="font-semibold text-background mb-2">Stratégie</h3>
                       <p className="text-background/70 text-sm">
-                        Trouvez l'équilibre entre sécurité et rendement. Votre comportement révélera votre profil d'investisseur naturel.
+                        Le ballon peut éclater à tout moment ! Trouvez le bon équilibre entre prendre des risques et sécuriser vos gains.
                       </p>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-gold/10 backdrop-blur-sm rounded-lg border border-gold/30">
+                  <div className="p-4 bg-bnp-gold/10 backdrop-blur-sm rounded-lg border border-bnp-gold/30">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-background/80 text-sm">Rendement potentiel</span>
-                      <span className="text-2xl font-bold text-gold">{potentialReturn}%</span>
+                      <span className="text-2xl font-bold text-bnp-gold">{potentialReturn}%</span>
                     </div>
                     <div className="h-2 bg-background/10 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-gradient-to-r from-gold to-gold-light transition-all duration-100"
+                        className="h-full bg-gradient-to-r from-bnp-gold to-bnp-gold-light transition-all duration-100"
                         style={{ width: `${Math.min((potentialReturn / 30) * 100, 100)}%` }}
                       />
                     </div>
                   </div>
                 </>
               ) : (
-                <div className="p-6 bg-background/5 backdrop-blur-sm rounded-lg border border-gold/20 animate-fade-in">
+                <div className="p-6 bg-background/5 backdrop-blur-sm rounded-lg border border-bnp-gold/20 animate-fade-in">
                   <h3 className="text-2xl font-bold text-background mb-4">
                     Profil : {riskLevel}
                   </h3>
                   <p className="text-background/80 leading-relaxed mb-6">
                     {getRiskDescription(riskLevel)}
                   </p>
+                  <div className="mb-6 p-4 bg-bnp-gold/10 rounded-lg">
+                    <h4 className="text-sm font-semibold text-background mb-2">Votre performance</h4>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="text-background/60">Rendement visé</span>
+                        <p className="text-bnp-gold font-bold">{potentialReturn}%</p>
+                      </div>
+                      <div>
+                        <span className="text-background/60">Durée d'inflation</span>
+                        <p className="text-bnp-gold font-bold">{inflationTime.toFixed(1)}s</p>
+                      </div>
+                    </div>
+                  </div>
                   <Button variant="hero" className="w-full">
                     Voir mes investissements recommandés
                   </Button>

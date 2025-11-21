@@ -47,13 +47,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        navy: {
-          DEFAULT: "hsl(var(--navy))",
-          light: "hsl(var(--navy-light))",
+        "bnp-green": {
+          DEFAULT: "hsl(var(--bnp-green))",
+          light: "hsl(var(--bnp-green-light))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
+        "bnp-gold": {
+          DEFAULT: "hsl(var(--bnp-gold))",
+          light: "hsl(var(--bnp-gold-light))",
         },
       },
       backgroundImage: {

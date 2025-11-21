@@ -15,18 +15,31 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/90 via-navy/70 to-navy/95" />
       </div>
 
-      {/* Animated Background Elements */}
+      {/* Animated Background Elements with Stars */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-bnp-gold/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
+        {/* Starry Effect */}
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-bnp-gold rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              opacity: Math.random() * 0.6 + 0.4,
+            }}
+          />
+        ))}
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/10 backdrop-blur-sm border border-gold/30 text-background">
-            <TrendingUp className="w-4 h-4 text-gold" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/10 backdrop-blur-sm border border-bnp-gold/30 text-background">
+            <TrendingUp className="w-4 h-4 text-bnp-gold" />
             <span className="text-sm font-medium">Banque Privée Nouvelle Génération</span>
           </div>
 
@@ -65,15 +78,15 @@ const HeroSection = () => {
           {/* Trust Indicators */}
           <div className="grid grid-cols-3 gap-8 pt-12 max-w-2xl mx-auto animate-fade-in-delayed">
             <div className="text-center">
-              <p className="text-3xl font-bold text-gold">25+</p>
+              <p className="text-3xl font-bold text-bnp-gold">25+</p>
               <p className="text-sm text-background/70 mt-1">Années d'expertise</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-gold">€15Mds</p>
+              <p className="text-3xl font-bold text-bnp-gold">€15Mds</p>
               <p className="text-sm text-background/70 mt-1">Actifs gérés</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-gold">98%</p>
+              <p className="text-3xl font-bold text-bnp-gold">98%</p>
               <p className="text-sm text-background/70 mt-1">Satisfaction client</p>
             </div>
           </div>
@@ -82,8 +95,8 @@ const HeroSection = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-gold/50 flex items-start justify-center p-2">
-          <div className="w-1.5 h-3 bg-gold rounded-full animate-pulse" />
+        <div className="w-6 h-10 rounded-full border-2 border-bnp-gold/50 flex items-start justify-center p-2">
+          <div className="w-1.5 h-3 bg-bnp-gold rounded-full animate-pulse" />
         </div>
       </div>
     </section>
