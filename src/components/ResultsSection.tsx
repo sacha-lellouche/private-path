@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Award, TrendingUp, Shield, Target, ArrowRight, Sparkles } from "lucide-react";
 import type { UserProfile } from "@/pages/OnboardingJourney";
 import { useNavigate } from "react-router-dom";
-import turtleIcon from "@/assets/turtle-icon.jpg";
+import turtleIcon from "@/assets/turtle-icon.png";
 
 interface ResultsSectionProps {
   profile: UserProfile;
