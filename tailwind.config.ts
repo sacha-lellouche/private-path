@@ -57,16 +57,18 @@ export default {
           light: "hsl(var(--bnp-gold-light))",
         },
         "bnp-navy": "hsl(var(--bnp-navy))",
+        "bnp-anthracite": "hsl(var(--bnp-anthracite))",
         "bnp-dark": "hsl(var(--bnp-dark))",
       },
       fontFamily: {
         'serif': ['Cormorant Garamond', 'serif'],
-        'sans': ['Inter', 'sans-serif'],
+        'sans': ['Montserrat', 'Inter', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-bnp-green': 'var(--gradient-bnp-green)',
         'gradient-bnp-gold': 'var(--gradient-bnp-gold)',
         'gradient-bnp-dark': 'var(--gradient-bnp-dark)',
+        'gradient-banner': 'var(--gradient-banner)',
       },
       boxShadow: {
         'elegant': 'var(--shadow-elegant)',

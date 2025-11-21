@@ -27,7 +27,7 @@ const HeroSection = () => {
           <div className="pt-4">
             <Button 
               size="lg"
-              className="bg-bnp-gold hover:bg-bnp-gold/90 text-bnp-green px-10 py-6 text-base font-medium shadow-lg hover:shadow-xl transition-all"
+              className="bg-bnp-gold hover:brightness-110 text-black px-10 py-6 text-base font-bold shadow-lg hover:shadow-2xl transition-all hover:scale-105"
               onClick={() => navigate("/parcours")}
             >
               Commencer votre parcours

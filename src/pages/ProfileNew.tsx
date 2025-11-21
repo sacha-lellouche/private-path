@@ -64,21 +64,21 @@ const ProfileNew = () => {
       <div className="max-w-4xl mx-auto p-8">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           {/* En-tête du profil */}
-          <div className="bg-gradient-to-r from-bnp-green to-green-700 px-8 py-6">
+          <div className="bg-gradient-banner px-8 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="bg-white rounded-full p-4 mr-4">
-                  <User className="w-12 h-12 text-bnp-green" />
+                  <User className="w-12 h-12 text-bnp-navy" />
                 </div>
                 <div className="text-white">
-                  <h1 className="text-3xl font-bold">{profile.firstName} {profile.lastName}</h1>
-                  <p className="text-green-100 mt-1">Client depuis {profile.clientSince}</p>
+                  <h1 className="text-3xl font-bold drop-shadow-md">{profile.firstName} {profile.lastName}</h1>
+                  <p className="text-white/90 mt-1 drop-shadow-sm">Client depuis {profile.clientSince}</p>
                 </div>
               </div>
               {!isEditing ? (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="bg-white text-bnp-green px-6 py-2 rounded-lg font-semibold hover:bg-green-50 transition-colors flex items-center"
+                  className="bg-bnp-gold text-black px-6 py-2 rounded-lg font-bold hover:brightness-110 transition-all hover:scale-105 shadow-lg flex items-center"
                 >
                   <Edit2 className="w-4 h-4 mr-2" />
                   Modifier
@@ -93,7 +93,7 @@ const ProfileNew = () => {
                   </button>
                   <button
                     onClick={handleSave}
-                    className="bg-white text-bnp-green px-6 py-2 rounded-lg font-semibold hover:bg-green-50 transition-colors flex items-center"
+                    className="bg-bnp-gold text-black px-6 py-2 rounded-lg font-bold hover:brightness-110 transition-all hover:scale-105 shadow-lg flex items-center"
                   >
                     <Save className="w-4 h-4 mr-2" />
                     Enregistrer
