@@ -163,36 +163,52 @@ const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
       </div>
 
       {/* CTA Section */}
-      <Card className="p-8 bg-bnp-gold/10 border-bnp-gold/30 animate-fade-in">
-        <div className="text-center space-y-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bnp-gold/20">
-            <Award className="w-8 h-8 text-bnp-gold" />
+      <Card className="p-10 md:p-12 bg-gradient-to-br from-bnp-gold/20 to-bnp-green/10 border-bnp-gold/50 animate-fade-in shadow-glow">
+        <div className="text-center space-y-8">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-bnp-gold/30 animate-pulse">
+            <Award className="w-10 h-10 text-bnp-gold" />
           </div>
           
           <div>
-            <h3 className="text-2xl font-serif font-semibold text-foreground mb-3">
-              Prêt à passer à l'action ?
+            <h3 className="text-3xl md:text-4xl font-serif font-semibold text-foreground mb-4">
+              Votre dashboard vous attend
             </h3>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Complétez votre profil avec un conseiller pour accéder à des recommandations 
-              encore plus personnalisées et débloquer l'accès à votre tableau de bord investisseur.
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+              Suivez vos investissements en temps réel, découvrez des opportunités exclusives 
+              et bénéficiez de l'accompagnement personnalisé de nos conseillers.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col gap-4 items-center pt-4">
             <Button
               size="lg"
               variant="hero"
-              className="gap-2"
+              className="gap-2 text-xl px-12 py-7 shadow-glow hover:scale-110 transition-all duration-300 animate-pulse"
               onClick={onContinue}
             >
+              <Sparkles className="w-6 h-6" />
               Accéder à mon dashboard
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-6 h-6" />
             </Button>
+            
+            <div className="flex flex-wrap gap-4 justify-center text-sm text-muted-foreground mt-4">
+              <span className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-bnp-gold" />
+                Suivi en temps réel
+              </span>
+              <span className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-bnp-gold" />
+                Données sécurisées
+              </span>
+              <span className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-bnp-gold" />
+                Recommandations personnalisées
+              </span>
+            </div>
           </div>
 
-          <p className="text-sm text-muted-foreground">
-            🔒 Vos données sont strictement confidentielles et sécurisées
+          <p className="text-xs text-muted-foreground pt-4 border-t border-bnp-gold/20">
+            Connexion requise pour accéder à votre espace personnel
           </p>
         </div>
       </Card>
