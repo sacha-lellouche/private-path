@@ -13,10 +13,16 @@ const LoginPage = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual login logic
-    console.log("Login attempt with:", email);
-    // Redirect to dashboard after login
-    navigate("/dashboard");
+    // Demo mode - accept any credentials
+    // Check if user has completed onboarding
+    const storedProfile = localStorage.getItem('userProfile');
+    if (!storedProfile) {
+      // No profile, redirect to onboarding
+      navigate("/parcours");
+    } else {
+      // Profile exists, go to dashboard
+      navigate("/dashboard");
+    }
   };
 
   return (

@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Investments from "./pages/Investments";
 import Profile from "./pages/Profile";
+import LoginPage from "./components/LoginPage";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/parcours" element={<OnboardingJourney />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/investments" element={<Investments />} />
           <Route path="/profile" element={<Profile />} />

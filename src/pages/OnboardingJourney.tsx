@@ -59,6 +59,8 @@ const OnboardingJourney = () => {
 
   const handleQuestionnaireComplete = (profile: UserProfile) => {
     setUserProfile(profile);
+    // Save profile to localStorage
+    localStorage.setItem('userProfile', JSON.stringify(profile));
     setStep("results");
   };
 
