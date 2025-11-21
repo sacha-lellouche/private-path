@@ -21,10 +21,13 @@ const ProfileNew = () => {
     
     // Métriques d'impact
     impactMetrics: {
-      development: true,
-      medicalResearch: true,
-      environment: false,
-      education: false
+      ecology: true,
+      health: true,
+      defense: false,
+      local: false,
+      developing: true,
+      blockchain: false,
+      culture: false
     }
   });
 
@@ -101,11 +104,78 @@ const ProfileNew = () => {
           </div>
 
           <div className="p-8 space-y-8">
-            {/* Informations personnelles */}
+            {/* Métriques d'impact - EN PRIORITÉ */}
             <section>
+              <h2 className="text-2xl font-bold text-bnp-dark mb-4 flex items-center">
+                <TrendingUp className="w-6 h-6 mr-2 text-bnp-green" />
+                Mes Centres d'Intérêt & Métriques d'Impact
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Sélectionnez les secteurs et métriques d'impact qui vous intéressent. Votre tableau de bord sera personnalisé en fonction de vos choix.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  { key: 'ecology', label: 'Écologie', icon: '🌱', description: 'Énergies renouvelables, protection environnement' },
+                  { key: 'health', label: 'Santé', icon: '❤️', description: 'Recherche médicale, biotechnologies' },
+                  { key: 'defense', label: 'Défense', icon: '🛡️', description: 'Cybersécurité, technologies de défense' },
+                  { key: 'local', label: 'Économie Locale', icon: '📍', description: 'PME locales, circuits courts' },
+                  { key: 'developing', label: 'Pays en Développement', icon: '🌍', description: 'Microfinance, infrastructures émergentes' },
+                  { key: 'blockchain', label: 'Blockchain', icon: '₿', description: 'Crypto-actifs, technologies décentralisées' },
+                  { key: 'culture', label: 'Art et Culture', icon: '🎨', description: 'Patrimoine culturel, industries créatives' }
+                ].map((metric) => (
+                  <div
+                    key={metric.key}
+                    onClick={() => isEditing && handleMetricToggle(metric.key)}
+                    className={`relative flex flex-col p-5 rounded-xl border-2 transition-all duration-300 ${
+                      isEditing ? 'cursor-pointer hover:shadow-lg transform hover:-translate-y-1' : ''
+                    } ${
+                      (isEditing ? tempProfile : profile).impactMetrics[metric.key as keyof typeof profile.impactMetrics]
+                        ? 'border-bnp-green bg-gradient-to-br from-bnp-green/10 to-bnp-green/5 shadow-md'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    {/* Checkmark badge */}
+                    {(isEditing ? tempProfile : profile).impactMetrics[metric.key as keyof typeof profile.impactMetrics] && (
+                      <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-bnp-green flex items-center justify-center shadow-md">
+                        <CheckCircle className="w-5 h-5 text-white" />
+                      </div>
+                    )}
+                    
+                    <div className="flex items-start gap-3 mb-3">
+                      <span className="text-3xl">{metric.icon}</span>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-bnp-dark text-lg mb-1">{metric.label}</h4>
+                        <p className="text-xs text-gray-600 leading-relaxed">{metric.description}</p>
+                      </div>
+                    </div>
+                    
+                    {(isEditing ? tempProfile : profile).impactMetrics[metric.key as keyof typeof profile.impactMetrics] && (
+                      <div className="mt-2 pt-3 border-t border-bnp-green/20">
+                        <span className="text-xs font-semibold text-bnp-green">✓ Actif sur votre dashboard</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Résumé des sélections */}
+              <div className="mt-6 p-4 bg-bnp-green/5 rounded-lg border border-bnp-green/20">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="font-semibold text-bnp-dark">Secteurs sélectionnés:</span>
+                  <span className="text-bnp-green font-bold">
+                    {Object.values((isEditing ? tempProfile : profile).impactMetrics).filter(Boolean).length}
+                  </span>
+                  <span className="text-gray-600">sur {Object.keys(profile.impactMetrics).length} disponibles</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Profil financier */}
+            <section className="border-t pt-8">
               <h2 className="text-2xl font-bold text-bnp-dark mb-6 flex items-center">
-                <User className="w-6 h-6 mr-2 text-bnp-green" />
-                Informations personnelles
+                <DollarSign className="w-6 h-6 mr-2 text-bnp-green" />
+                Profil d'investissement
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -203,11 +273,11 @@ const ProfileNew = () => {
               </div>
             </section>
 
-            {/* Profil financier */}
+            {/* Informations personnelles - Secondaire */}
             <section className="border-t pt-8">
               <h2 className="text-2xl font-bold text-bnp-dark mb-6 flex items-center">
-                <DollarSign className="w-6 h-6 mr-2 text-bnp-green" />
-                Profil financier
+                <User className="w-6 h-6 mr-2 text-bnp-green" />
+                Informations personnelles
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -293,50 +363,6 @@ const ProfileNew = () => {
                     </div>
                   )}
                 </div>
-              </div>
-            </section>
-
-            {/* Métriques d'impact */}
-            <section className="border-t pt-8">
-              <h2 className="text-2xl font-bold text-bnp-dark mb-4 flex items-center">
-                <TrendingUp className="w-6 h-6 mr-2 text-bnp-green" />
-                Métriques d'impact à suivre
-              </h2>
-              <p className="text-gray-600 mb-6">Sélectionnez les métriques d'impact qui vous intéressent pour votre tableau de bord</p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  { key: 'development', label: 'Développement pays émergents', icon: '🌍' },
-                  { key: 'medicalResearch', label: 'Recherche médicale', icon: '🧬' },
-                  { key: 'environment', label: 'Protection environnement', icon: '🌱' },
-                  { key: 'education', label: 'Éducation et formation', icon: '📚' }
-                ].map((metric) => (
-                  <div
-                    key={metric.key}
-                    onClick={() => isEditing && handleMetricToggle(metric.key)}
-                    className={`flex items-center justify-between p-4 rounded-lg border-2 transition-all ${
-                      isEditing ? 'cursor-pointer hover:shadow-md' : ''
-                    } ${
-                      (isEditing ? tempProfile : profile).impactMetrics[metric.key as keyof typeof profile.impactMetrics]
-                        ? 'border-bnp-green bg-green-50'
-                        : 'border-gray-200 bg-gray-50'
-                    }`}
-                  >
-                    <div className="flex items-center">
-                      <span className="text-2xl mr-3">{metric.icon}</span>
-                      <span className="font-medium text-bnp-dark">{metric.label}</span>
-                    </div>
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                      (isEditing ? tempProfile : profile).impactMetrics[metric.key as keyof typeof profile.impactMetrics]
-                        ? 'border-bnp-green bg-bnp-green'
-                        : 'border-gray-300'
-                    }`}>
-                      {(isEditing ? tempProfile : profile).impactMetrics[metric.key as keyof typeof profile.impactMetrics] && (
-                        <CheckCircle className="w-4 h-4 text-white" />
-                      )}
-                    </div>
-                  </div>
-                ))}
               </div>
             </section>
           </div>
