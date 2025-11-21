@@ -1,80 +1,130 @@
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LayoutDashboard, TrendingUp, User, Grid3x3, Home, LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import bnpLogo from "@/assets/bnp-logo.png";
 
 const BNPNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { path: "/", label: "Accueil", icon: Home },
-    { path: "/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
-    { path: "/investments", label: "Investissements", icon: TrendingUp },
-    { path: "/profile", label: "Mon profil", icon: User },
+  const navLinks = [
+    { label: "Tableau de bord", href: "/dashboard" },
+    { label: "Investissements", href: "/investments" },
+    { label: "Mon profil", href: "/profile" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
-
-  const handleLogout = () => {
-    localStorage.removeItem('userProfile');
-    navigate('/');
-  };
+  const isActive = (href: string) => location.pathname === href;
 
   return (
-    <nav className="bg-bnp-dark sticky top-0 z-50 shadow-lg">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-bnp-green-dark shadow-elegant">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div 
-            className="flex items-center gap-3 cursor-pointer" 
+            className="flex items-center cursor-pointer"
             onClick={() => navigate('/')}
           >
-            <div className="bg-bnp-green p-2 rounded-lg">
-              <Grid3x3 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-white font-bold text-xl tracking-wide">BNP PARIBAS</h1>
-              <p className="text-bnp-green text-xs font-semibold tracking-widest">BANQUE PRIVÉE</p>
-            </div>
+            <img 
+              src={bnpLogo} 
+              alt="BNP Paribas - La banque d'un monde qui change" 
+              className="h-12 w-auto"
+            />
           </div>
 
-          {/* Navigation buttons */}
-          <div className="flex items-center gap-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.path);
-              return (
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.label}
+                onClick={() => navigate(link.href)}
+                className={`text-sm font-light transition-colors cursor-pointer ${
+                  isActive(link.href)
+                    ? "text-bnp-gold"
+                    : "text-white hover:text-bnp-gold"
+                }`}
+              >
+                {link.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-white hover:text-bnp-gold hover:bg-white/10"
+              onClick={() => navigate('/')}
+            >
+              Accueil
+            </Button>
+            <Button 
+              variant="hero" 
+              size="sm"
+              onClick={() => navigate('/parcours')}
+            >
+              Commencer
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-white"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-6 border-t border-white/20">
+            <div className="flex flex-col gap-4">
+              {navLinks.map((link) => (
                 <button
-                  key={item.path}
-                  onClick={() => navigate(item.path)}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all duration-300 ${
-                    active
-                      ? "bg-bnp-green text-white shadow-lg"
-                      : "text-gray-300 hover:bg-white/10 hover:text-white"
+                  key={link.label}
+                  onClick={() => {
+                    navigate(link.href);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`text-sm font-light transition-colors py-2 cursor-pointer text-left ${
+                    isActive(link.href)
+                      ? "text-bnp-gold"
+                      : "text-white hover:text-bnp-gold"
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span className="hidden md:inline">{item.label}</span>
+                  {link.label}
                 </button>
-              );
-            })}
-          </div>
-
-          {/* User greeting and logout */}
-          <div className="flex items-center gap-4">
-            <div className="text-right hidden lg:block">
-              <p className="text-gray-400 text-sm">Bienvenue,</p>
-              <p className="text-bnp-green font-semibold">Jean Dupont</p>
+              ))}
+              <div className="flex flex-col gap-2 pt-4 border-t border-white/20">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full text-white hover:text-bnp-gold hover:bg-white/10"
+                  onClick={() => {
+                    navigate('/');
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Accueil
+                </Button>
+                <Button 
+                  variant="hero" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => {
+                    navigate('/parcours');
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Commencer
+                </Button>
+              </div>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-gray-300 hover:bg-red-500/20 hover:text-red-400 rounded-lg transition-all"
-              title="Se déconnecter"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="hidden lg:inline text-sm">Déconnexion</span>
-            </button>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );
