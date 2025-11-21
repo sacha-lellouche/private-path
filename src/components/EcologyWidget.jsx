@@ -18,30 +18,34 @@ function EcologyWidget() {
 
   return (
     <div 
-      className={`widget-card ${expanded ? 'expanded' : ''} relative`}
-      onClick={() => !expanded && setExpanded(true)}
+      className={`bg-white rounded-xl shadow-lg p-6 transition-all duration-300 ${
+        expanded ? 'col-span-2' : ''
+      }`}
     >
-      {expanded && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setExpanded(false);
-          }}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
-        >
-          <X className="w-5 h-5 text-gray-600" />
-        </button>
-      )}
-
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-bnp-dark flex items-center">
           <Leaf className="w-6 h-6 mr-2 text-bnp-green" />
           Impact écologique
         </h3>
+        {!expanded ? (
+          <button
+            onClick={() => setExpanded(true)}
+            className="text-sm text-bnp-green hover:text-bnp-green-light font-semibold"
+          >
+            Voir détails →
+          </button>
+        ) : (
+          <button
+            onClick={() => setExpanded(false)}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-600" />
+          </button>
+        )}
       </div>
 
       {/* Vue visuelle - Feuille qui se remplit */}
-      <div className="mb-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6">
+      <div className="mb-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6">
         <div className="relative flex items-center justify-center" style={{ minHeight: '280px' }}>
           <svg viewBox="0 0 200 280" className="w-full" style={{ maxHeight: '320px' }}>
             <defs>
@@ -220,29 +224,29 @@ function EcologyWidget() {
       {/* Données quantitatives */}
       {expanded && (
         <div className="space-y-4 animate-fade-in">
-          <div className="grid grid-cols-3 gap-3">
-            <div className="bg-gradient-to-br from-green-500 to-green-700 rounded-lg p-3 text-white">
-              <div className="flex items-center mb-1">
-                <Leaf className="w-4 h-4 mr-1" />
-                <span className="text-xs opacity-90">Arbres</span>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-gradient-to-br from-green-500 to-green-700 rounded-lg p-4 text-white">
+              <div className="flex items-center mb-2">
+                <Leaf className="w-5 h-5 mr-2" />
+                <span className="text-sm opacity-90">Arbres</span>
               </div>
               <div className="text-2xl font-bold">{(ecologyData.treesEquivalent / 1000).toFixed(1)}k</div>
               <div className="text-xs opacity-80">équivalent</div>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg p-3 text-white">
-              <div className="flex items-center mb-1">
-                <Wind className="w-4 h-4 mr-1" />
-                <span className="text-xs opacity-90">Énergie</span>
+            <div className="bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg p-4 text-white">
+              <div className="flex items-center mb-2">
+                <Wind className="w-5 h-5 mr-2" />
+                <span className="text-sm opacity-90">Énergie</span>
               </div>
               <div className="text-2xl font-bold">{ecologyData.renewableEnergy}</div>
               <div className="text-xs opacity-80">MWh renouvelable</div>
             </div>
 
-            <div className="bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-lg p-3 text-white">
-              <div className="flex items-center mb-1">
-                <Droplets className="w-4 h-4 mr-1" />
-                <span className="text-xs opacity-90">Eau</span>
+            <div className="bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-lg p-4 text-white">
+              <div className="flex items-center mb-2">
+                <Droplets className="w-5 h-5 mr-2" />
+                <span className="text-sm opacity-90">Eau</span>
               </div>
               <div className="text-2xl font-bold">{(ecologyData.waterSaved / 1000).toFixed(0)}k</div>
               <div className="text-xs opacity-80">m³ économisés</div>
@@ -263,8 +267,8 @@ function EcologyWidget() {
             </div>
           </div>
 
-          <div className="border-t pt-3">
-            <h4 className="text-sm font-semibold text-bnp-dark mb-2">Actions environnementales financées</h4>
+          <div className="border-t pt-4">
+            <h4 className="text-sm font-semibold text-bnp-dark mb-3">Actions environnementales financées</h4>
             <div className="space-y-2 text-sm">
               <div className="flex items-start">
                 <div className="w-2 h-2 rounded-full bg-green-500 mt-1.5 mr-2 flex-shrink-0" />
@@ -288,10 +292,8 @@ function EcologyWidget() {
       )}
 
       {!expanded && (
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            {ecologyData.co2Saved} tonnes de CO₂ • {(ecologyData.treesEquivalent / 1000).toFixed(1)}k arbres équivalent
-          </p>
+        <div className="text-center text-sm text-gray-600">
+          {ecologyData.co2Saved} tonnes de CO₂ • {(ecologyData.treesEquivalent / 1000).toFixed(1)}k arbres équivalent
         </div>
       )}
     </div>
