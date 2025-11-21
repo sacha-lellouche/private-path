@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import turtleIcon from "@/assets/turtle-icon.jpg";
+import turtleIcon from "@/assets/turtle-icon.png";
 
 const BNPNavigation = () => {
   const navigate = useNavigate();
