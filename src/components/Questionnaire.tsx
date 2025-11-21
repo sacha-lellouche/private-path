@@ -17,6 +17,7 @@ const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance
   const [horizon, setHorizon] = useState<string[]>([]);
   const [reaction, setReaction] = useState<string>("");
   const [assets, setAssets] = useState<string[]>([]);
+  const [sectors, setSectors] = useState<string[]>([]);
 
   // Pré-sélection intelligente basée sur les jeux
   useEffect(() => {
@@ -52,7 +53,18 @@ const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance
         setAssets(["immobilier", "fonds"]);
       }
     }
-  }, [currentQuestion, initialRiskProfile, diversificationScore, horizon.length, reaction, assets.length]);
+
+    // Question secteurs: pré-sélectionner selon le profil
+    if (sectors.length === 0 && currentQuestion === 3) {
+      if (initialRiskProfile === "Conservateur") {
+        setSectors(["sante", "localite"]);
+      } else if (initialRiskProfile === "Équilibré") {
+        setSectors(["ecologie", "sante"]);
+      } else {
+        setSectors(["ecologie", "defense", "blockchain"]);
+      }
+    }
+  }, [currentQuestion, initialRiskProfile, diversificationScore, horizon.length, reaction, assets.length, sectors.length]);
 
   const questions = [
     {
@@ -93,6 +105,20 @@ const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance
         { value: "fonds", label: "Fonds", icon: "💼", desc: "Fonds diversifiés classiques" },
       ],
     },
+    {
+      id: "sectors",
+      title: "Quels secteurs vous intéressent le plus ?",
+      subtitle: "Sélectionnez les domaines dans lesquels vous aimeriez investir",
+      type: "multi-select",
+      options: [
+        { value: "ecologie", label: "Écologie", icon: "🌱", desc: "Transition énergétique, environnement" },
+        { value: "sante", label: "Santé", icon: "🏥", desc: "Biotechnologies, équipements médicaux" },
+        { value: "defense", label: "Défense", icon: "🛡️", desc: "Cybersécurité, technologies de défense" },
+        { value: "localite", label: "Économie locale", icon: "🏘️", desc: "PME locales, immobilier régional" },
+        { value: "pays-dev", label: "Pays en développement", icon: "🌍", desc: "Microfinance, infrastructures émergentes" },
+        { value: "blockchain", label: "Blockchain", icon: "⛓️", desc: "Crypto-actifs, technologies décentralisées" },
+      ],
+    },
   ];
 
   const currentQ = questions[currentQuestion];
@@ -106,6 +132,10 @@ const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance
       setAssets(prev =>
         prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
       );
+    } else if (currentQ.id === "sectors") {
+      setSectors(prev =>
+        prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
+      );
     }
   };
 
@@ -117,6 +147,7 @@ const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance
     if (currentQ.id === "horizon") return horizon.length > 0;
     if (currentQ.id === "reaction") return reaction !== "";
     if (currentQ.id === "assets") return assets.length > 0;
+    if (currentQ.id === "sectors") return sectors.length > 0;
     return false;
   };
 
@@ -130,6 +161,7 @@ const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance
         horizon,
         reactionToCrisis: reaction,
         knownAssets: assets,
+        preferredSectors: sectors,
         gameScore: 0,
         diversificationScore,
         riskTolerance,
@@ -183,7 +215,7 @@ const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance
           {currentQ.options.map((option) => {
             const isSelected =
               currentQ.type === "multi-select"
-                ? (currentQ.id === "horizon" ? horizon : assets).includes(option.value)
+                ? (currentQ.id === "horizon" ? horizon : currentQ.id === "assets" ? assets : sectors).includes(option.value)
                 : reaction === option.value;
 
             return (
