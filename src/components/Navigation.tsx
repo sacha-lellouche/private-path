@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import bnpLogo from "@/assets/bnp-logo.png";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,18 +27,12 @@ const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-gold rounded-sm flex items-center justify-center">
-              <span className="text-bnp-green font-serif font-bold text-xl">B</span>
-            </div>
-            <div className="hidden sm:block">
-              <div className="font-serif font-semibold text-lg text-white leading-tight">
-                BNP PARIBAS
-              </div>
-              <div className="text-xs text-bnp-gold tracking-wider">
-                BANQUE PRIVÉE
-              </div>
-            </div>
+          <div className="flex items-center">
+            <img 
+              src={bnpLogo} 
+              alt="BNP Paribas - La banque d'un monde qui change" 
+              className="h-12 w-auto"
+            />
           </div>
 
           {/* Desktop Navigation */}
