@@ -7,15 +7,15 @@ const TopBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-white dark:bg-background border-b border-border/50">
+    <div className="bg-gradient-banner border-b border-white/10">
       <div className="container mx-auto px-6 py-2.5">
         <div className="flex items-center justify-between">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white font-medium">
             Découvrez votre profil d'investisseur en quelques minutes
           </p>
           <button
             onClick={() => setIsVisible(false)}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-white/80 hover:text-white transition-colors"
             aria-label="Fermer le bandeau"
           >
             <X className="w-3.5 h-3.5" />
