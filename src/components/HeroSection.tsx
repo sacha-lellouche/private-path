@@ -58,7 +58,7 @@ const HeroSection = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-fade-in-delayed">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 animate-fade-in-delayed">
             <Button 
               variant="hero" 
               size="lg"
@@ -73,22 +73,6 @@ const HeroSection = () => {
             >
               Découvrir nos solutions
             </Button>
-          </div>
-
-          {/* Trust Indicators */}
-          <div className="grid grid-cols-3 gap-8 pt-12 max-w-2xl mx-auto animate-fade-in-delayed">
-            <div className="text-center">
-              <p className="text-3xl font-bold text-bnp-gold">25+</p>
-              <p className="text-sm text-background/70 mt-1">Années d'expertise</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-bnp-gold">€15Mds</p>
-              <p className="text-sm text-background/70 mt-1">Actifs gérés</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-bnp-gold">98%</p>
-              <p className="text-sm text-background/70 mt-1">Satisfaction client</p>
-            </div>
           </div>
         </div>
       </div>
