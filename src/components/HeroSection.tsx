@@ -21,7 +21,7 @@ const HeroSection = () => {
         <div className="max-w-5xl mx-auto space-y-16">
           {/* Main Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-background leading-[1.2] tracking-wide uppercase">
-            Investissez
+            Votre Patrimoine
           </h1>
 
           {/* CTA Button */}
