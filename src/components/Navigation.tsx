@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import bnpLogo from "@/assets/bnp-logo.png";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -29,12 +28,14 @@ const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center">
-            <img 
-              src={bnpLogo} 
-              alt="BNP Paribas - La banque d'un monde qui change" 
-              className="h-12 w-auto"
-            />
+          <div 
+            className="flex items-center cursor-pointer"
+            onClick={() => navigate('/')}
+          >
+            <div className="flex flex-col">
+              <span className="text-white font-bold text-2xl tracking-tight leading-none">BNP PARIBAS</span>
+              <span className="text-white/90 text-xs font-light tracking-wide leading-tight">La banque d'un monde qui change</span>
+            </div>
           </div>
 
           {/* Desktop Navigation */}
