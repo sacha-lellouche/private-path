@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-banking.jpg";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
       {/* Background Image with Overlay */}
@@ -49,9 +52,7 @@ const HeroSection = () => {
               variant="hero" 
               size="lg"
               className="group min-w-[240px]"
-              onClick={() => {
-                document.getElementById('risk-game')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => navigate("/parcours")}
             >
               Commencer votre parcours
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
