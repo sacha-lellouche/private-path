@@ -1,20 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ChevronRight, TrendingDown, Sparkles } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 import type { RiskProfile, UserProfile } from "@/pages/OnboardingJourney";
 
 interface QuestionnaireProps {
   initialRiskProfile: RiskProfile;
+  diversificationScore: number;
+  riskTolerance: number;
   onComplete: (profile: UserProfile) => void;
 }
 
-const Questionnaire = ({ initialRiskProfile, onComplete }: QuestionnaireProps) => {
+const Questionnaire = ({ initialRiskProfile, diversificationScore, riskTolerance, onComplete }: QuestionnaireProps) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [horizon, setHorizon] = useState<string[]>([]);
   const [reaction, setReaction] = useState<string>("");
   const [assets, setAssets] = useState<string[]>([]);
+
+  // Pré-sélection intelligente basée sur les jeux
+  useEffect(() => {
+    // Question horizon: pré-sélectionner selon le profil de risque
+    if (horizon.length === 0 && currentQuestion === 0) {
+      if (initialRiskProfile === "Conservateur") {
+        setHorizon(["long", "moyen-enfants"]);
+      } else if (initialRiskProfile === "Équilibré") {
+        setHorizon(["moyen-maison", "long"]);
+      } else {
+        setHorizon(["court", "moyen-maison"]);
+      }
+    }
+
+    // Question réaction: pré-sélectionner selon le profil
+    if (!reaction && currentQuestion === 1) {
+      if (initialRiskProfile === "Conservateur") {
+        setReaction("wait");
+      } else if (initialRiskProfile === "Équilibré") {
+        setReaction("calm");
+      } else {
+        setReaction("buy");
+      }
+    }
+
+    // Question actifs: pré-sélectionner selon la diversification
+    if (assets.length === 0 && currentQuestion === 2) {
+      if (diversificationScore > 66) {
+        setAssets(["immobilier", "actions", "etf", "fonds"]);
+      } else if (diversificationScore > 33) {
+        setAssets(["immobilier", "actions", "etf"]);
+      } else {
+        setAssets(["immobilier", "fonds"]);
+      }
+    }
+  }, [currentQuestion, initialRiskProfile, diversificationScore, horizon.length, reaction, assets.length]);
 
   const questions = [
     {
@@ -93,19 +131,12 @@ const Questionnaire = ({ initialRiskProfile, onComplete }: QuestionnaireProps) =
         reactionToCrisis: reaction,
         knownAssets: assets,
         gameScore: 0,
+        diversificationScore,
+        riskTolerance,
       });
     }
   };
 
-  const getSuggestion = () => {
-    if (currentQ.id === "reaction" && initialRiskProfile === "Audacieux") {
-      return "💡 Votre profil audacieux suggère : 'J'achète plus' !";
-    }
-    if (currentQ.id === "horizon" && initialRiskProfile === "Conservateur") {
-      return "💡 Nous suggérons des objectifs à long terme pour limiter les risques.";
-    }
-    return null;
-  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -140,11 +171,11 @@ const Questionnaire = ({ initialRiskProfile, onComplete }: QuestionnaireProps) =
           <p className="text-lg text-muted-foreground">
             {currentQ.subtitle}
           </p>
-          {getSuggestion() && (
-            <div className="inline-block px-4 py-2 bg-bnp-gold/10 rounded-lg border border-bnp-gold/20">
-              <p className="text-sm text-foreground">{getSuggestion()}</p>
-            </div>
-          )}
+          <div className="inline-block px-4 py-2 bg-bnp-gold/10 rounded-lg border border-bnp-gold/20">
+            <p className="text-sm text-foreground">
+              💡 Nous avons pré-sélectionné des réponses basées sur vos jeux. Ajustez-les si nécessaire !
+            </p>
+          </div>
         </div>
 
         {/* Options */}
