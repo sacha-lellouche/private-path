@@ -115,67 +115,19 @@ const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
         </div>
       </Card>
 
-      {/* Recommended Products */}
-      <div className="space-y-6">
-        <div className="text-center">
-          <h3 className="text-2xl md:text-3xl font-serif font-semibold text-foreground mb-2">
-            Produits recommandés pour vous
-          </h3>
-          <p className="text-muted-foreground">
-            Sélectionnés en fonction de votre profil et de vos objectifs
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {recommendedProducts.map((product, index) => (
-            <Card
-              key={product.name}
-              className="p-6 bg-background border-border hover:border-bnp-gold/50 transition-all duration-300 hover:shadow-elegant animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="space-y-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-lg text-foreground mb-1">
-                      {product.name}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">{product.desc}</p>
-                  </div>
-                  <Badge variant="outline" className="border-bnp-gold/30 bg-bnp-gold/10 text-bnp-gold">
-                    {product.match}%
-                  </Badge>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
-                  <div>
-                    <div className="text-sm text-muted-foreground mb-1">Rendement</div>
-                    <div className="font-semibold text-bnp-gold">{product.return}/an</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground mb-1">Risque</div>
-                    <div className="font-semibold text-foreground">{product.risk}</div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </div>
-
       {/* CTA Section */}
-      <Card className="p-10 md:p-12 bg-gradient-to-br from-bnp-gold/20 to-bnp-green/10 border-bnp-gold/50 animate-fade-in shadow-glow">
+      <Card className="p-10 md:p-12 bg-gradient-to-br from-bnp-gold/20 to-bnp-green/10 border-bnp-gold/50 animate-fade-in">
         <div className="text-center space-y-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-bnp-gold/30 animate-pulse">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-bnp-gold/30">
             <Award className="w-10 h-10 text-bnp-gold" />
           </div>
           
           <div>
             <h3 className="text-3xl md:text-4xl font-serif font-semibold text-foreground mb-4">
-              Votre dashboard vous attend
+              Prêt à commencer votre parcours d'investissement ?
             </h3>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Suivez vos investissements en temps réel, découvrez des opportunités exclusives 
-              et bénéficiez de l'accompagnement personnalisé de nos conseillers.
+              Suivez vos investissements en temps réel et bénéficiez de l'accompagnement personnalisé de nos conseillers.
             </p>
           </div>
 
@@ -183,33 +135,13 @@ const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
             <Button
               size="lg"
               variant="hero"
-              className="gap-2 text-xl px-12 py-7 shadow-glow hover:scale-110 transition-all duration-300 animate-pulse"
+              className="gap-2 text-xl px-12 py-7 hover:scale-105 transition-all duration-300"
               onClick={onContinue}
             >
-              <Sparkles className="w-6 h-6" />
               Accéder à mon dashboard
               <ArrowRight className="w-6 h-6" />
             </Button>
-            
-            <div className="flex flex-wrap gap-4 justify-center text-sm text-muted-foreground mt-4">
-              <span className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-bnp-gold" />
-                Suivi en temps réel
-              </span>
-              <span className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-bnp-gold" />
-                Données sécurisées
-              </span>
-              <span className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-bnp-gold" />
-                Recommandations personnalisées
-              </span>
-            </div>
           </div>
-
-          <p className="text-xs text-muted-foreground pt-4 border-t border-bnp-gold/20">
-            Connexion requise pour accéder à votre espace personnel
-          </p>
         </div>
       </Card>
     </div>
