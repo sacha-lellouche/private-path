@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import bnpLogo from "@/assets/bnp-logo.png";
 
 const Navigation = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -16,10 +18,10 @@ const Navigation = () => {
   }, []);
 
   const navLinks = [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Investissements", href: "/investments" },
     { label: "Patrimoine", href: "#products" },
-    { label: "Investissement", href: "#products" },
     { label: "Services", href: "#products" },
-    { label: "À propos", href: "#" },
   ];
 
   return (
@@ -41,7 +43,13 @@ const Navigation = () => {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-light text-white hover:text-bnp-gold transition-colors"
+                onClick={(e) => {
+                  if (link.href.startsWith('/')) {
+                    e.preventDefault();
+                    navigate(link.href);
+                  }
+                }}
+                className="text-sm font-light text-white hover:text-bnp-gold transition-colors cursor-pointer"
               >
                 {link.label}
               </a>
@@ -50,11 +58,20 @@ const Navigation = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" className="text-white hover:text-bnp-gold hover:bg-white/10">
-              Connexion
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-white hover:text-bnp-gold hover:bg-white/10"
+              onClick={() => navigate('/parcours')}
+            >
+              Commencer
             </Button>
-            <Button variant="hero" size="sm">
-              Nous contacter
+            <Button 
+              variant="hero" 
+              size="sm"
+              onClick={() => navigate('/dashboard')}
+            >
+              Mon espace
             </Button>
           </div>
 
@@ -75,18 +92,40 @@ const Navigation = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-light text-white hover:text-bnp-gold transition-colors py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    if (link.href.startsWith('/')) {
+                      e.preventDefault();
+                      navigate(link.href);
+                    }
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-sm font-light text-white hover:text-bnp-gold transition-colors py-2 cursor-pointer"
                 >
                   {link.label}
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-white/20">
-                <Button variant="ghost" size="sm" className="w-full text-white hover:text-bnp-gold hover:bg-white/10">
-                  Connexion
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full text-white hover:text-bnp-gold hover:bg-white/10"
+                  onClick={() => {
+                    navigate('/parcours');
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Commencer
                 </Button>
-                <Button variant="hero" size="sm" className="w-full">
-                  Nous contacter
+                <Button 
+                  variant="hero" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => {
+                    navigate('/dashboard');
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Mon espace
                 </Button>
               </div>
             </div>

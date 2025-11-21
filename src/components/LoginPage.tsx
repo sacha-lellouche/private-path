@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Sparkles, Lock } from "lucide-react";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,6 +15,8 @@ const LoginPage = () => {
     e.preventDefault();
     // TODO: Implement actual login logic
     console.log("Login attempt with:", email);
+    // Redirect to dashboard after login
+    navigate("/dashboard");
   };
 
   return (

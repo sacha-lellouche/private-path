@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Globe, Leaf, Heart, GraduationCap, Shield, Palette, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Globe, Leaf, Heart, GraduationCap, Shield, Palette, ChevronLeft, ChevronRight, Home, TrendingUp, User } from 'lucide-react';
 
 // Icônes pour les métriques avec couleurs de fond
 const metricIcons = {
@@ -327,47 +328,89 @@ function InvestmentCarousel({ title, products, userMetrics }) {
 }
 
 function Investments() {
+  const navigate = useNavigate();
   // Récupération des métriques de l'utilisateur (normalement depuis le contexte/store)
   const userMetrics = ['development', 'ecology'];
 
   return (
-    <div className="min-h-screen">
-      {/* En-tête */}
-      <div className="bg-gradient-to-r from-bnp-green to-green-700 text-white py-12 px-4 mb-8 rounded-xl shadow-lg">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold mb-3">Nouveaux Investissements</h1>
-          <p className="text-green-100 text-lg">
-            Découvrez des opportunités d'investissement alignées avec vos valeurs et objectifs
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto">
-        {/* Section Pour Vous */}
-        <InvestmentCarousel 
-          title="Pour vous"
-          products={investmentProducts.forYou}
-          userMetrics={userMetrics}
-        />
-
-        {/* Section À Découvrir */}
-        <InvestmentCarousel 
-          title="À découvrir"
-          products={investmentProducts.discover}
-          userMetrics={userMetrics}
-        />
-      </div>
-
-      {/* Légende des métriques */}
-      <div className="max-w-7xl mx-auto mt-12 bg-white rounded-xl shadow-md p-6">
-        <h3 className="text-lg font-bold text-bnp-dark mb-4">Métriques d'impact</h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {Object.entries(metricIcons).map(([key, { icon: Icon, label, color }]) => (
-            <div key={key} className="flex items-center space-x-2">
-              <Icon className={`w-5 h-5 ${color}`} />
-              <span className="text-sm text-gray-700">{label}</span>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Bar */}
+      <nav className="bg-white shadow-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-emerald-700">BNP Private Banking</h1>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
+              >
+                <Home className="w-5 h-5" />
+                <span className="hidden md:inline">Accueil</span>
+              </button>
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
+              >
+                <TrendingUp className="w-5 h-5" />
+                <span className="hidden md:inline">Dashboard</span>
+              </button>
+              <button
+                onClick={() => navigate('/investments')}
+                className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-700 font-semibold rounded-lg"
+              >
+                <Globe className="w-5 h-5" />
+                <span className="hidden md:inline">Investissements</span>
+              </button>
+              <button
+                onClick={() => navigate('/profile')}
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
+              >
+                <User className="w-5 h-5" />
+                <span className="hidden md:inline">Profil</span>
+              </button>
             </div>
-          ))}
+          </div>
+        </div>
+      </nav>
+
+      <div className="p-8">
+        {/* En-tête */}
+        <div className="bg-gradient-to-r from-emerald-600 to-green-700 text-white py-12 px-8 mb-8 rounded-xl shadow-lg">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl font-bold mb-3">Nouveaux Investissements</h2>
+            <p className="text-green-100 text-lg">
+              Découvrez des opportunités d'investissement alignées avec vos valeurs et objectifs
+            </p>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          {/* Section Pour Vous */}
+          <InvestmentCarousel 
+            title="Pour vous"
+            products={investmentProducts.forYou}
+            userMetrics={userMetrics}
+          />
+
+          {/* Section À Découvrir */}
+          <InvestmentCarousel 
+            title="À découvrir"
+            products={investmentProducts.discover}
+            userMetrics={userMetrics}
+          />
+        </div>
+
+        {/* Légende des métriques */}
+        <div className="max-w-7xl mx-auto mt-12 bg-white rounded-xl shadow-md p-6 mb-8">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Métriques d'impact</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {Object.entries(metricIcons).map(([key, { icon: Icon, label, color }]) => (
+              <div key={key} className="flex items-center space-x-2">
+                <Icon className={`w-5 h-5 ${color}`} />
+                <span className="text-sm text-gray-700">{label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
