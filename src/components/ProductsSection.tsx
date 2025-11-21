@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Building2, TrendingUp, Coins, Lock, BarChart3, Globe, Home, ArrowRight, CheckCircle2, ArrowUpRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
 import productImmobilier from "@/assets/product-immobilier.jpg";
 import productPrivateEquity from "@/assets/product-private-equity.jpg";
@@ -249,10 +250,10 @@ const products: Product[] = [
 const ProductsSection = () => {
   const [emblaRef] = useEmblaCarousel({ 
     align: "start",
-    loop: false,
+    loop: true,
     skipSnaps: false,
-    dragFree: true,
-  });
+    dragFree: false,
+  }, [Autoplay({ delay: 3000, stopOnInteraction: true })]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   return (
