@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import turtleIcon from "@/assets/turtle-icon.png";
 
 const BNPNavigation = () => {
   const navigate = useNavigate();
@@ -37,13 +38,20 @@ const BNPNavigation = () => {
               <button
                 key={link.label}
                 onClick={() => navigate(link.href)}
-                className={`text-sm font-light transition-colors cursor-pointer ${
+                className={`text-sm font-light transition-colors cursor-pointer flex items-center gap-2 ${
                   isActive(link.href)
                     ? "text-bnp-gold"
                     : "text-white hover:text-bnp-gold"
                 }`}
               >
                 {link.label}
+                {link.href === "/profile" && (
+                  <img 
+                    src={turtleIcon} 
+                    alt="Profil investisseur" 
+                    className="w-6 h-6 animate-float"
+                  />
+                )}
               </button>
             ))}
           </div>
@@ -87,13 +95,20 @@ const BNPNavigation = () => {
                     navigate(link.href);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`text-sm font-light transition-colors py-2 cursor-pointer text-left ${
+                  className={`text-sm font-light transition-colors py-2 cursor-pointer text-left flex items-center gap-2 ${
                     isActive(link.href)
                       ? "text-bnp-gold"
                       : "text-white hover:text-bnp-gold"
                   }`}
                 >
                   {link.label}
+                  {link.href === "/profile" && (
+                    <img 
+                      src={turtleIcon} 
+                      alt="Profil investisseur" 
+                      className="w-6 h-6"
+                    />
+                  )}
                 </button>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-white/20">
