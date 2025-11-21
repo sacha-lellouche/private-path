@@ -8,6 +8,7 @@ const RiskGameSection = () => {
   const [balloonSize, setBalloonSize] = useState(30);
   const [isInflating, setIsInflating] = useState(false);
   const [hasPopped, setHasPopped] = useState(false);
+  const [exploded, setExploded] = useState(false); // Explosion involontaire
   const [potentialReturn, setPotentialReturn] = useState(5);
   const [riskLevel, setRiskLevel] = useState<"Conservateur" | "Équilibré" | "Audacieux" | null>(null);
   const [gameStarted, setGameStarted] = useState(false);
@@ -38,19 +39,23 @@ const RiskGameSection = () => {
           const popChance = Math.pow(sizeRatio, 2) * 0.08; // Courbe exponentielle
           
           if (Math.random() < popChance) {
+            console.log("BALLOON EXPLODED!", { newSize, time: inflationTimeRef.current });
+            setExploded(true); // Marquer comme explosion involontaire
             setHasPopped(true);
             setIsInflating(false);
             setInflationTime(inflationTimeRef.current);
-            calculateRiskProfile(newSize, inflationTimeRef.current);
+            calculateRiskProfile(newSize, inflationTimeRef.current, true); // true = explosion
             return prev;
           }
           
           // Limite maximale
           if (newSize >= 200) {
+            console.log("BALLOON MAX SIZE REACHED!");
+            setExploded(true);
             setHasPopped(true);
             setIsInflating(false);
             setInflationTime(inflationTimeRef.current);
-            calculateRiskProfile(200, inflationTimeRef.current);
+            calculateRiskProfile(200, inflationTimeRef.current, true);
             return 200;
           }
           
@@ -64,22 +69,41 @@ const RiskGameSection = () => {
     };
   }, [isInflating, hasPopped]);
 
-  const calculateRiskProfile = (finalSize: number, timeInflated: number) => {
-    // Calcul basé sur la taille finale ET le temps d'inflation
-    const sizeScore = finalSize;
-    const timeScore = timeInflated * 10; // Plus on maintient longtemps, plus on est audacieux
-    const totalScore = sizeScore + timeScore;
+  const calculateRiskProfile = (finalSize: number, timeInflated: number, didExplode: boolean) => {
+    console.log("=== CALCUL DU PROFIL ===");
+    console.log("Taille finale:", finalSize);
+    console.log("Temps:", timeInflated);
+    console.log("A explosé:", didExplode);
     
-    console.log("Profile calculation:", { finalSize, timeInflated, totalScore });
+    let profile: "Conservateur" | "Équilibré" | "Audacieux";
     
-    if (totalScore < 100) {
-      setRiskLevel("Conservateur");
-    } else if (totalScore < 180) {
-      setRiskLevel("Équilibré");
+    // Si le ballon a explosé = comportement audacieux (a pris trop de risques)
+    if (didExplode) {
+      profile = "Audacieux";
+      console.log("→ Profil AUDACIEUX (explosion)");
     } else {
-      setRiskLevel("Audacieux");
+      // Arrêt volontaire : on analyse la taille et le temps
+      const sizeScore = finalSize;
+      const timeScore = timeInflated * 15;
+      const totalScore = sizeScore + timeScore;
+      
+      console.log("Score taille:", sizeScore);
+      console.log("Score temps:", timeScore);
+      console.log("Score total:", totalScore);
+      
+      if (totalScore < 120) {
+        profile = "Conservateur";
+        console.log("→ Profil CONSERVATEUR (arrêt précoce)");
+      } else if (totalScore < 200) {
+        profile = "Équilibré";
+        console.log("→ Profil ÉQUILIBRÉ (arrêt mesuré)");
+      } else {
+        profile = "Audacieux";
+        console.log("→ Profil AUDACIEUX (arrêt tardif)");
+      }
     }
     
+    setRiskLevel(profile);
     setGameCompleted(true);
   };
 
@@ -95,11 +119,11 @@ const RiskGameSection = () => {
     if (balloonSize > 30 && !hasPopped) {
       const currentTime = (Date.now() - startTimeRef.current) / 1000;
       setInflationTime(currentTime);
-      calculateRiskProfile(balloonSize, currentTime);
+      console.log("USER STOPPED VOLUNTARILY", { size: balloonSize, time: currentTime });
+      calculateRiskProfile(balloonSize, currentTime, false); // false = arrêt volontaire
       setHasPopped(true);
     }
   };
-
 
   const getBalloonColor = () => {
     if (balloonSize < 80) return "from-emerald-400 to-emerald-600";
@@ -126,7 +150,7 @@ const RiskGameSection = () => {
   };
 
   return (
-    <section className="py-24 bg-primary relative overflow-hidden">
+    <section id="risk-game" className="py-24 bg-primary relative overflow-hidden">
       {/* Starry Background Effect */}
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 50 }).map((_, i) => (
@@ -192,7 +216,11 @@ const RiskGameSection = () => {
                     <div className="text-center animate-scale-in">
                       {riskLevel && (
                         <div className="space-y-4">
-                          <Award className="w-20 h-20 text-bnp-gold mx-auto animate-pulse-glow" />
+                          {exploded ? (
+                            <div className="text-6xl">💥</div>
+                          ) : (
+                            <Award className="w-20 h-20 text-bnp-gold mx-auto animate-pulse-glow" />
+                          )}
                           <Badge className="text-lg px-4 py-2 bg-bnp-gold text-primary">
                             {riskLevel}
                           </Badge>
