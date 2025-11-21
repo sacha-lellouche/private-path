@@ -1,6 +1,8 @@
 import { Shield, TrendingUp, Target, Leaf, Heart, Lock, Globe, MapPin, Bitcoin } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import SectorInterestsDialog from "./SectorInterestsDialog";
+import { useState } from "react";
 
 interface ProfileIndicatorProps {
   profile: {
@@ -11,6 +13,8 @@ interface ProfileIndicatorProps {
 }
 
 const ProfileIndicator = ({ profile }: ProfileIndicatorProps) => {
+  const [currentSectors, setCurrentSectors] = useState(profile.preferredSectors || []);
+
   const getRiskIcon = (risk: string) => {
     switch (risk) {
       case "conservateur":
@@ -45,22 +49,29 @@ const ProfileIndicator = ({ profile }: ProfileIndicatorProps) => {
 
   const getSectorLabel = (sector: string) => {
     const labels: Record<string, string> = {
-      ecology: "Écologie",
-      health: "Santé",
-      defense: "Défense",
-      local: "Économie Locale",
-      developing: "Pays en Développement",
-      blockchain: "Blockchain"
+      ecology: "🌱 Écologie",
+      health: "❤️ Santé",
+      defense: "🛡️ Défense",
+      local: "📍 Économie Locale",
+      developing: "🌍 Pays en Développement",
+      blockchain: "₿ Blockchain"
     };
     return labels[sector] || sector;
   };
 
+  const handleSectorsSave = (newSectors: string[]) => {
+    setCurrentSectors(newSectors);
+    profile.preferredSectors = newSectors;
+  };
+
   return (
-    <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+    <Card className="bg-gradient-to-br from-[hsl(var(--bnp-green))]/5 to-[hsl(var(--bnp-gold))]/10 border-[hsl(var(--bnp-green))]/20">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          {getRiskIcon(profile.riskProfile)}
-          Votre Profil d'Investisseur
+        <CardTitle className="flex items-center justify-between text-lg">
+          <div className="flex items-center gap-2">
+            {getRiskIcon(profile.riskProfile)}
+            Votre Profil d'Investisseur
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -76,19 +87,26 @@ const ProfileIndicator = ({ profile }: ProfileIndicatorProps) => {
             {profile.experience}
           </Badge>
         </div>
-        {profile.preferredSectors && profile.preferredSectors.length > 0 && (
-          <div className="space-y-2">
-            <span className="text-sm text-muted-foreground">Secteurs d'intérêt</span>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-muted-foreground">Mes Centres d'Intérêt</span>
+            <SectorInterestsDialog currentSectors={currentSectors} onSave={handleSectorsSave} />
+          </div>
+          {currentSectors.length > 0 ? (
             <div className="flex flex-wrap gap-2">
-              {profile.preferredSectors.map((sector) => (
-                <Badge key={sector} variant="default" className="gap-1">
-                  {getSectorIcon(sector)}
+              {currentSectors.map((sector) => (
+                <Badge 
+                  key={sector} 
+                  className="gap-1 bg-gradient-to-r from-[hsl(var(--bnp-green))] to-[hsl(var(--bnp-green-light))] text-white border-none hover:shadow-lg transition-shadow text-sm px-3 py-1.5"
+                >
                   {getSectorLabel(sector)}
                 </Badge>
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="text-sm text-muted-foreground italic">Aucun secteur sélectionné</p>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

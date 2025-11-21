@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Globe, Users, TrendingUp, Building2, X, MapPin } from 'lucide-react';
+import AfricaMapSVG from './AfricaMapSVG';
 
-// Données simulées pour les pays avec coordonnées précises
+// Données simulées pour les pays avec coordonnées précises (% position dans le SVG)
 const countryImpact = [
-  { name: 'Dakar, Sénégal', level: 4, people: 45000, businesses: 320, x: 17, y: 15 },
-  { name: 'Bamako, Mali', level: 3, people: 32000, businesses: 180, x: 15, y: 14 },
-  { name: 'Ouagadougou, Burkina Faso', level: 3, people: 28000, businesses: 150, x: 18, y: 14 },
-  { name: 'Antananarivo, Madagascar', level: 2, people: 18000, businesses: 95, x: 72, y: 42 },
-  { name: 'Yaoundé, Cameroun', level: 4, people: 52000, businesses: 380, x: 28, y: 23 },
-  { name: 'Kigali, Rwanda', level: 3, people: 35000, businesses: 210, x: 42, y: 30 },
-  { name: 'Nairobi, Kenya', level: 4, people: 48000, businesses: 295, x: 48, y: 28 },
-  { name: 'Lagos, Nigeria', level: 5, people: 62000, businesses: 410, x: 22, y: 20 },
+  { name: 'Dakar, Sénégal', level: 4, people: 45000, businesses: 320, x: 35, y: 25 },
+  { name: 'Bamako, Mali', level: 3, people: 32000, businesses: 180, x: 40, y: 28 },
+  { name: 'Ouagadougou, Burkina Faso', level: 3, people: 28000, businesses: 150, x: 43, y: 30 },
+  { name: 'Antananarivo, Madagascar', level: 2, people: 18000, businesses: 95, x: 72, y: 65 },
+  { name: 'Yaoundé, Cameroun', level: 4, people: 52000, businesses: 380, x: 52, y: 45 },
+  { name: 'Kigali, Rwanda', level: 3, people: 35000, businesses: 210, x: 58, y: 50 },
+  { name: 'Nairobi, Kenya', level: 4, people: 48000, businesses: 295, x: 62, y: 48 },
+  { name: 'Lagos, Nigeria', level: 5, people: 62000, businesses: 410, x: 45, y: 38 },
 ];
 
 function DevelopmentWidget() {
@@ -58,17 +59,12 @@ function DevelopmentWidget() {
         </h3>
       </div>
 
-      {/* Vue visuelle - Carte d'Afrique réelle avec image */}
+      {/* Vue visuelle - Carte d'Afrique SVG */}
       <div className="mb-6 bg-gradient-to-br from-blue-50 to-green-50 rounded-lg p-6 overflow-hidden">
-        <div className="relative" style={{ paddingBottom: '100%' }}>
-          {/* Image de la carte d'Afrique en arrière-plan */}
+        <div className="relative" style={{ paddingBottom: '110%' }}>
+          {/* Carte SVG d'Afrique en arrière-plan */}
           <div className="absolute inset-0">
-            <img 
-              src="/images/africa-map.png" 
-              alt="Carte de l'Afrique"
-              className="w-full h-full object-contain opacity-90"
-              style={{ filter: 'brightness(1.05) contrast(0.95)' }}
-            />
+            <AfricaMapSVG />
             
             {/* Overlay SVG pour les points d'investissement */}
             <svg 
