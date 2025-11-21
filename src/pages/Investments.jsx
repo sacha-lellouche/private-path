@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Globe, Leaf, Heart, GraduationCap, Shield, Palette, ChevronLeft, ChevronRight, Home, TrendingUp, User } from 'lucide-react';
+import { Globe, Leaf, Heart, GraduationCap, Shield, Palette, ChevronLeft, ChevronRight } from 'lucide-react';
+import BNPNavigation from '../components/BNPNavigation';
 
 // Icônes pour les métriques avec couleurs de fond
 const metricIcons = {
@@ -334,48 +335,11 @@ function Investments() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation Bar */}
-      <nav className="bg-white shadow-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-emerald-700">BNP Private Banking</h1>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => navigate('/')}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
-              >
-                <Home className="w-5 h-5" />
-                <span className="hidden md:inline">Accueil</span>
-              </button>
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
-              >
-                <TrendingUp className="w-5 h-5" />
-                <span className="hidden md:inline">Dashboard</span>
-              </button>
-              <button
-                onClick={() => navigate('/investments')}
-                className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-700 font-semibold rounded-lg"
-              >
-                <Globe className="w-5 h-5" />
-                <span className="hidden md:inline">Investissements</span>
-              </button>
-              <button
-                onClick={() => navigate('/profile')}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
-              >
-                <User className="w-5 h-5" />
-                <span className="hidden md:inline">Profil</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <BNPNavigation />
 
       <div className="p-8">
         {/* En-tête */}
-        <div className="bg-gradient-to-r from-emerald-600 to-green-700 text-white py-12 px-8 mb-8 rounded-xl shadow-lg">
+        <div className="bg-gradient-to-r from-bnp-green to-green-700 text-white py-12 px-8 mb-8 rounded-xl shadow-lg">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl font-bold mb-3">Nouveaux Investissements</h2>
             <p className="text-green-100 text-lg">
