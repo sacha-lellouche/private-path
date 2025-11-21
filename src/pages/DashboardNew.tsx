@@ -3,6 +3,7 @@ import { TrendingUp } from "lucide-react";
 import BNPNavigation from "@/components/BNPNavigation";
 import PortfolioStats from "@/components/PortfolioStats";
 import PortfolioChartSection from "@/components/PortfolioChartSection";
+import PortfolioPositions from "@/components/PortfolioPositions";
 import WorldMapWidget from "@/components/WorldMapWidget";
 import EcologyWidget from "@/components/EcologyWidget";
 
@@ -33,6 +34,9 @@ const DashboardNew = () => {
           {/* Graphique */}
           <PortfolioChartSection />
         </div>
+
+        {/* Section Positions détaillées */}
+        <PortfolioPositions preferredSectors={['ecology', 'developing', 'local', 'blockchain']} />
 
         {/* Section Impact des investissements */}
         <div>

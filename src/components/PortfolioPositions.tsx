@@ -59,14 +59,18 @@ const PortfolioPositions = ({ preferredSectors = [] }: PortfolioPositionsProps) 
   };
 
   // Generate positions based on preferred sectors
-  const positions = preferredSectors.map((sector) => {
+  const positions = preferredSectors.map((sector, index) => {
     const sectorKey = sectorKeyMap[sector];
     const sectorData = sectorImpacts[sectorKey];
     
     if (!sectorData || sectorData.length === 0) return null;
     
     const product = sectorData[0];
-    const amount = Math.floor(Math.random() * 40000) + 10000;
+    
+    // Distribution réaliste des 480k sur 4 positions
+    const amounts = [125000, 145000, 110000, 100000];
+    const amount = amounts[index] || 50000;
+    
     const performance = (Math.random() * 20 - 5).toFixed(2);
     const isPositive = parseFloat(performance) >= 0;
     
@@ -100,8 +104,19 @@ const PortfolioPositions = ({ preferredSectors = [] }: PortfolioPositionsProps) 
   return (
     <>
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">Mes Positions par Secteur</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-bnp-dark">Mes Positions Détaillées</h2>
+          <div className="text-right">
+            <p className="text-sm text-muted-foreground">Total investi</p>
+            <p className="text-2xl font-bold text-bnp-green">
+              {positions.reduce((sum: number, pos: any) => sum + pos.amount, 0).toLocaleString('fr-FR')} €
+            </p>
+          </div>
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          Cliquez sur une position pour voir son impact détaillé
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {positions.map((position: any, index: number) => {
             const Icon = getSectorIcon(position.sector);
             const colorClass = getSectorColor(position.sector);
