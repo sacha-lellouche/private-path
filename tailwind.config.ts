@@ -69,6 +69,7 @@ export default {
         'gradient-bnp-gold': 'var(--gradient-bnp-gold)',
         'gradient-bnp-dark': 'var(--gradient-bnp-dark)',
         'gradient-banner': 'var(--gradient-banner)',
+        'gradient-hero': 'var(--gradient-hero)',
       },
       boxShadow: {
         'elegant': 'var(--shadow-elegant)',

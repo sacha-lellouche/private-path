@@ -83,32 +83,32 @@ const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
       </div>
 
       {/* Profile Card */}
-      <Card className="p-8 md:p-12 bg-gradient-hero text-background animate-scale-in">
+      <Card className="p-8 md:p-12 bg-gradient-hero text-white animate-scale-in">
         <div className="text-center space-y-6">
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-background/10 backdrop-blur-sm">
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm">
             {getProfileIcon()}
           </div>
           
           <div>
-            <Badge className="mb-3 text-base px-4 py-1 bg-bnp-gold text-bnp-green border-0">
+            <Badge className="mb-3 text-base px-4 py-1 bg-bnp-gold text-black border-0 font-bold">
               Votre profil
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-serif font-semibold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-lg">
               Investisseur {profile.riskProfile}
             </h2>
-            <p className="text-xl text-background/80 max-w-2xl mx-auto">
+            <p className="text-xl text-white/90 max-w-2xl mx-auto font-medium drop-shadow-md">
               {getProfileDescription()}
             </p>
           </div>
 
           {/* Profile Stats */}
-          <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pt-6 border-t border-background/20">
+          <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pt-6 border-t border-white/30">
             {radarData.map((item) => (
               <div key={item.label}>
-                <div className="text-3xl font-bold text-bnp-gold mb-1">
+                <div className="text-3xl font-bold text-bnp-gold drop-shadow-lg mb-1">
                   {item.value}%
                 </div>
-                <div className="text-sm text-background/70">{item.label}</div>
+                <div className="text-sm text-white/90 font-medium drop-shadow-sm">{item.label}</div>
               </div>
             ))}
           </div>
