@@ -6,7 +6,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bnp-green">
+    <section className="relative min-h-screen flex items-start justify-center overflow-hidden bg-bnp-green pt-32">
       {/* Background Image with Blur */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -20,15 +20,15 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-6 text-center">
         <div className="max-w-5xl mx-auto space-y-16">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-background leading-[1.2] tracking-wide">
-            bienvenue sur la banque privée BNP
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-background leading-[1.2] tracking-wide uppercase">
+            BIENVENUE SUR LA BANQUE PRIVÉE BNP
           </h1>
 
           {/* CTA Button */}
           <Button 
-            variant="hero" 
+            variant="outline" 
             size="lg"
-            className="text-lg px-8 py-6"
+            className="text-lg px-8 py-6 bg-background/10 border-background/30 text-background hover:bg-background/20"
             onClick={() => navigate("/parcours")}
           >
             Commencer à investir
