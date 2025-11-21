@@ -253,11 +253,11 @@ const ProductsSection = () => {
     loop: true,
     skipSnaps: false,
     dragFree: false,
-  }, [Autoplay({ delay: 3000, stopOnInteraction: true })]);
+  }, [Autoplay({ delay: 2000, stopOnInteraction: true })]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   return (
-    <section className="py-24 bg-gradient-subtle">
+    <section id="products" className="py-24 bg-gradient-subtle">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
