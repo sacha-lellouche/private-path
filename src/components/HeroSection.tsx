@@ -17,21 +17,20 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center">
-        <div className="max-w-5xl mx-auto space-y-16">
+      <div className="relative z-10 container mx-auto px-6">
+        <div className="max-w-2xl space-y-8">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-background leading-[1.2] tracking-wide">
-            Bienvenue sur la banque privée BNP
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-background leading-tight uppercase tracking-wider">
+            Banque privée
           </h1>
 
           {/* CTA Button */}
           <Button 
-            variant="outline" 
             size="lg"
-            className="text-lg px-8 py-6 bg-background/10 border-background/30 text-background hover:bg-background/20"
+            className="bg-bnp-gold hover:bg-bnp-gold/90 text-bnp-green px-8 py-6 text-base font-medium"
             onClick={() => navigate("/parcours")}
           >
-            Commencer à investir
+            Commencer
           </Button>
         </div>
       </div>
