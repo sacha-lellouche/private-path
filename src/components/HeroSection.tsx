@@ -6,32 +6,33 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   return (
-    <section className="relative min-h-screen flex items-start justify-center overflow-hidden bg-bnp-green pt-32">
-      {/* Background Image with Blur */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={heroImage} 
-          alt="Investment opportunities" 
-          className="w-full h-full object-cover blur-md opacity-30"
-        />
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-20">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/20" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6">
-        <div className="max-w-2xl space-y-8">
+        <div className="max-w-4xl mx-auto text-center space-y-12">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-background leading-tight uppercase tracking-wider">
-            Banque privée
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-bnp-green leading-tight tracking-tight">
+            Services de Banque Privée
           </h1>
 
+          {/* Description */}
+          <p className="text-lg md:text-xl text-foreground/80 leading-relaxed max-w-3xl mx-auto font-light">
+            Quelle que soit la complexité de votre situation financière, vous pouvez compter sur une équipe disposant des connaissances et de l'expérience dont vous avez besoin. Une banque privée efficace et personnalisée à la fois.
+          </p>
+
           {/* CTA Button */}
-          <Button 
-            size="lg"
-            className="bg-bnp-gold hover:bg-bnp-gold/90 text-bnp-green px-8 py-6 text-base font-medium"
-            onClick={() => navigate("/parcours")}
-          >
-            Commencer
-          </Button>
+          <div className="pt-4">
+            <Button 
+              size="lg"
+              className="bg-bnp-gold hover:bg-bnp-gold/90 text-bnp-green px-10 py-6 text-base font-medium shadow-lg hover:shadow-xl transition-all"
+              onClick={() => navigate("/parcours")}
+            >
+              Commencer votre parcours
+            </Button>
+          </div>
         </div>
       </div>
     </section>
