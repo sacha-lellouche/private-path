@@ -4,7 +4,7 @@ import BalloonGame from "@/components/BalloonGame";
 import WheelGame from "@/components/WheelGame";
 import Questionnaire from "@/components/Questionnaire";
 import ResultsSection from "@/components/ResultsSection";
-import TransitionScreen from "@/components/TransitionScreen";
+import LoginPage from "@/components/LoginPage";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
@@ -22,7 +22,7 @@ export interface UserProfile {
 
 const OnboardingJourney = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState<"game1" | "game2" | "transition" | "questionnaire" | "results">("game1");
+  const [step, setStep] = useState<"game1" | "game2" | "questionnaire" | "results" | "login">("game1");
   const [riskProfile, setRiskProfile] = useState<RiskProfile | null>(null);
   const [diversificationScore, setDiversificationScore] = useState(0);
   const [riskTolerance, setRiskTolerance] = useState(0);
@@ -51,16 +51,16 @@ const OnboardingJourney = () => {
       diversificationScore: divScore,
       riskTolerance: riskTol,
     }));
-    setTimeout(() => setStep("transition"), 1000);
-  };
-
-  const handleTransitionComplete = () => {
-    setStep("questionnaire");
+    setTimeout(() => setStep("questionnaire"), 1000);
   };
 
   const handleQuestionnaireComplete = (profile: UserProfile) => {
     setUserProfile(profile);
     setStep("results");
+  };
+
+  const handleResultsComplete = () => {
+    setStep("login");
   };
 
   return (
@@ -92,29 +92,39 @@ const OnboardingJourney = () => {
             }`} />
           </div>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "game2" ? "bg-bnp-gold text-bnp-green" : (step === "transition" || step === "questionnaire" || step === "results" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
+            step === "game2" ? "bg-bnp-gold text-bnp-green" : (step === "questionnaire" || step === "results" || step === "login" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
           }`}>
             2
           </div>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
-              step === "transition" || step === "questionnaire" || step === "results" ? "w-full" : "w-0"
+              step === "questionnaire" || step === "results" || step === "login" ? "w-full" : "w-0"
             }`} />
           </div>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "transition" || step === "questionnaire" ? "bg-bnp-gold text-bnp-green" : (step === "results" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
+            step === "questionnaire" ? "bg-bnp-gold text-bnp-green" : (step === "results" || step === "login" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
           }`}>
             3
           </div>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
-              step === "results" ? "w-full" : "w-0"
+              step === "results" || step === "login" ? "w-full" : "w-0"
             }`} />
           </div>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-            step === "results" ? "bg-bnp-gold text-bnp-green" : "bg-muted text-muted-foreground"
+            step === "results" ? "bg-bnp-gold text-bnp-green" : (step === "login" ? "bg-bnp-green text-background" : "bg-muted text-muted-foreground")
           }`}>
             4
+          </div>
+          <div className="w-8 h-0.5 bg-border">
+            <div className={`h-full bg-bnp-gold transition-all duration-500 ${
+              step === "login" ? "w-full" : "w-0"
+            }`} />
+          </div>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+            step === "login" ? "bg-bnp-gold text-bnp-green" : "bg-muted text-muted-foreground"
+          }`}>
+            5
           </div>
         </div>
       </div>
@@ -128,13 +138,6 @@ const OnboardingJourney = () => {
         {step === "game2" && (
           <WheelGame onComplete={handleWheelComplete} />
         )}
-
-        {step === "transition" && riskProfile && (
-          <TransitionScreen
-            riskProfile={riskProfile}
-            onContinue={handleTransitionComplete}
-          />
-        )}
         
         {step === "questionnaire" && riskProfile && (
           <Questionnaire
@@ -146,7 +149,11 @@ const OnboardingJourney = () => {
         )}
         
         {step === "results" && userProfile && (
-          <ResultsSection profile={userProfile} />
+          <ResultsSection profile={userProfile} onContinue={handleResultsComplete} />
+        )}
+        
+        {step === "login" && (
+          <LoginPage />
         )}
       </div>
     </div>

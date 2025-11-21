@@ -223,11 +223,13 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
               <Button
                 size="lg"
                 variant="hero"
-                className="w-full text-lg py-6 select-none"
-                onPointerDown={startInflating}
-                onPointerUp={stopInflating}
-                onPointerLeave={stopInflating}
-                onPointerCancel={stopInflating}
+                className="w-full text-lg py-6 select-none touch-none"
+                onMouseDown={startInflating}
+                onMouseUp={stopInflating}
+                onMouseLeave={stopInflating}
+                onTouchStart={startInflating}
+                onTouchEnd={stopInflating}
+                onTouchCancel={stopInflating}
               >
                 {gameStarted ? "Maintenez pour gonfler" : "Commencer le jeu"}
               </Button>
