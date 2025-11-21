@@ -7,18 +7,18 @@ const TopBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-gradient-gold border-b border-bnp-gold/20 animate-fade-in">
-      <div className="container mx-auto px-6 py-3">
+    <div className="bg-background border-b border-border animate-fade-in">
+      <div className="container mx-auto px-6 py-2.5">
         <div className="flex items-center justify-between">
-          <p className="text-sm text-bnp-green font-medium">
-            ✨ Découvrez votre profil d'investisseur en quelques minutes
+          <p className="text-xs text-muted-foreground">
+            Découvrez votre profil d'investisseur en quelques minutes
           </p>
           <button
             onClick={() => setIsVisible(false)}
-            className="text-bnp-green/70 hover:text-bnp-green transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Fermer le bandeau"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
