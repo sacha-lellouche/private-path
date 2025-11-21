@@ -22,13 +22,7 @@ const Navigation = () => {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-elegant"
-          : "bg-transparent"
-      }`}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-bnp-green-dark shadow-elegant">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -37,10 +31,10 @@ const Navigation = () => {
               <span className="text-bnp-green font-serif font-bold text-xl">B</span>
             </div>
             <div className="hidden sm:block">
-              <div className="font-serif font-semibold text-lg text-foreground leading-tight">
+              <div className="font-serif font-semibold text-lg text-white leading-tight">
                 BNP PARIBAS
               </div>
-              <div className="text-xs text-muted-foreground tracking-wider">
+              <div className="text-xs text-bnp-gold tracking-wider">
                 BANQUE PRIVÉE
               </div>
             </div>
@@ -52,7 +46,7 @@ const Navigation = () => {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-light text-foreground hover:text-bnp-gold transition-colors"
+                className="text-sm font-light text-white hover:text-bnp-gold transition-colors"
               >
                 {link.label}
               </a>
@@ -61,7 +55,7 @@ const Navigation = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="text-white hover:text-bnp-gold hover:bg-white/10">
               Connexion
             </Button>
             <Button variant="hero" size="sm">
@@ -72,7 +66,7 @@ const Navigation = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-foreground"
+            className="md:hidden p-2 text-white"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -80,20 +74,20 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-6 border-t border-border bg-background/95 backdrop-blur-md">
+          <div className="md:hidden py-6 border-t border-white/20">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-light text-foreground hover:text-bnp-gold transition-colors py-2"
+                  className="text-sm font-light text-white hover:text-bnp-gold transition-colors py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
                 </a>
               ))}
-              <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button variant="ghost" size="sm" className="w-full">
+              <div className="flex flex-col gap-2 pt-4 border-t border-white/20">
+                <Button variant="ghost" size="sm" className="w-full text-white hover:text-bnp-gold hover:bg-white/10">
                   Connexion
                 </Button>
                 <Button variant="hero" size="sm" className="w-full">
