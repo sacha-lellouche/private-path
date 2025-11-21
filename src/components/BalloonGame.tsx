@@ -161,34 +161,92 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
         {/* Game Area */}
         <div className="flex flex-col items-center gap-8">
           {/* Balloon Container - Fixed Height */}
-          <div className="relative flex items-center justify-center" style={{ minHeight: "240px", width: "240px" }}>
+          <div className="relative flex items-center justify-center" style={{ minHeight: "280px", width: "240px" }}>
+            {/* Main Balloon Body */}
             <div
-              className="rounded-full transition-all duration-100 flex items-center justify-center shadow-2xl absolute"
+              className="absolute transition-all duration-100"
               style={{
                 width: `${balloonSize}px`,
-                height: `${balloonSize}px`,
-                backgroundColor: getBalloonColor(),
-                transform: hasPopped ? (exploded ? "scale(0)" : "scale(1.05)") : "scale(1)",
+                height: `${balloonSize * 1.15}px`,
+                borderRadius: "50% 50% 45% 45%",
+                background: hasPopped && exploded 
+                  ? "transparent"
+                  : `radial-gradient(circle at 30% 30%, ${getBalloonColor()}dd, ${getBalloonColor()})`,
+                boxShadow: hasPopped 
+                  ? "none" 
+                  : `0 20px 40px -15px ${getBalloonColor()}66, inset -10px -10px 30px rgba(0,0,0,0.2), inset 10px 10px 30px rgba(255,255,255,0.15)`,
+                transform: hasPopped 
+                  ? (exploded ? "scale(0)" : "scale(1.05)") 
+                  : `scale(1) ${isInflating ? "translateY(-2px)" : "translateY(0)"}`,
                 transition: hasPopped ? "transform 0.3s ease-out" : "all 0.1s ease-out",
+                filter: hasPopped && !exploded ? "brightness(1.1)" : "none",
               }}
             >
+              {/* Shine/Highlight Effect */}
+              {!hasPopped && (
+                <div 
+                  className="absolute rounded-full opacity-60"
+                  style={{
+                    width: `${balloonSize * 0.35}px`,
+                    height: `${balloonSize * 0.4}px`,
+                    top: `${balloonSize * 0.15}px`,
+                    left: `${balloonSize * 0.2}px`,
+                    background: "radial-gradient(circle at center, rgba(255,255,255,0.8), transparent)",
+                    filter: "blur(8px)",
+                  }}
+                />
+              )}
+              
               {hasPopped && exploded && (
                 <div className="absolute inset-0 flex items-center justify-center text-4xl animate-scale-in">
                   💥
                 </div>
               )}
               {!hasPopped && (
-                <div className="text-white font-bold text-xl">
+                <div 
+                  className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl"
+                  style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
+                >
                   +{potentialReturn}%
                 </div>
               )}
             </div>
             
+            {/* Balloon Knot */}
+            {!hasPopped && (
+              <div 
+                className="absolute"
+                style={{ 
+                  top: `${120 + (balloonSize * 1.15)/2 - 5}px`,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                }}
+              >
+                <div 
+                  className="relative"
+                  style={{
+                    width: `${Math.max(8, balloonSize * 0.08)}px`,
+                    height: `${Math.max(12, balloonSize * 0.1)}px`,
+                    background: `linear-gradient(180deg, ${getBalloonColor()}, ${getBalloonColor()}cc)`,
+                    borderRadius: "50% 50% 40% 40%",
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                  }}
+                />
+              </div>
+            )}
+            
             {/* Balloon String */}
             {!hasPopped && (
               <div 
-                className="absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-400"
-                style={{ height: "40px", top: `${120 + balloonSize/2}px` }}
+                className="absolute left-1/2 -translate-x-1/2"
+                style={{ 
+                  height: "50px", 
+                  top: `${120 + (balloonSize * 1.15)/2 + Math.max(8, balloonSize * 0.08)}px`,
+                  borderLeft: "2px solid #8b7355",
+                  opacity: 0.7,
+                  transform: `translateX(-50%) rotate(${isInflating ? "2deg" : "0deg"})`,
+                  transition: "transform 0.3s ease-out",
+                }}
               />
             )}
           </div>
