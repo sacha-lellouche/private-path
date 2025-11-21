@@ -173,10 +173,10 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
 
         {/* Game Area */}
         <div className="flex flex-col items-center gap-8">
-          {/* Balloon */}
-          <div className="relative">
+          {/* Balloon Container - Fixed Height */}
+          <div className="relative flex items-center justify-center" style={{ minHeight: "240px", width: "240px" }}>
             <div
-              className="rounded-full transition-all duration-100 flex items-center justify-center shadow-2xl"
+              className="rounded-full transition-all duration-100 flex items-center justify-center shadow-2xl absolute"
               style={{
                 width: `${balloonSize}px`,
                 height: `${balloonSize}px`,
@@ -201,7 +201,7 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
             {!hasPopped && (
               <div 
                 className="absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-400"
-                style={{ height: "40px", top: `${balloonSize}px` }}
+                style={{ height: "40px", top: `${120 + balloonSize/2}px` }}
               />
             )}
           </div>
