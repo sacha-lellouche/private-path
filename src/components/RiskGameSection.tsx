@@ -12,6 +12,7 @@ const RiskGameSection = () => {
   const [riskLevel, setRiskLevel] = useState<"Conservateur" | "Équilibré" | "Audacieux" | null>(null);
   const [gameStarted, setGameStarted] = useState(false);
   const [inflationTime, setInflationTime] = useState(0);
+  const [gameCompleted, setGameCompleted] = useState(false);
   const inflationTimeRef = useRef(0);
   const startTimeRef = useRef(0);
 
@@ -78,6 +79,8 @@ const RiskGameSection = () => {
     } else {
       setRiskLevel("Audacieux");
     }
+    
+    setGameCompleted(true);
   };
 
   const handleStartInflating = () => {
@@ -97,17 +100,6 @@ const RiskGameSection = () => {
     }
   };
 
-  const resetGame = () => {
-    setBalloonSize(30);
-    setIsInflating(false);
-    setHasPopped(false);
-    setPotentialReturn(5);
-    setRiskLevel(null);
-    setGameStarted(true);
-    setInflationTime(0);
-    inflationTimeRef.current = 0;
-    startTimeRef.current = 0;
-  };
 
   const getBalloonColor = () => {
     if (balloonSize < 80) return "from-emerald-400 to-emerald-600";
@@ -168,10 +160,18 @@ const RiskGameSection = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-background mb-4">
               Le Ballon des Opportunités
             </h2>
-            <p className="text-lg text-background/80">
+            <p className="text-lg text-background/80 mb-3">
               Découvrez votre profil d'investisseur de manière ludique. 
               Jusqu'où oserez-vous aller ?
             </p>
+            {!gameCompleted && (
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/30">
+                <AlertTriangle className="w-4 h-4 text-amber-300" />
+                <span className="text-sm font-medium text-background/90">
+                  Attention : Ce test ne peut être réalisé qu'une seule fois
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -182,16 +182,12 @@ const RiskGameSection = () => {
                 <div className="relative h-80 flex items-center justify-center">
                   {!hasPopped ? (
                     <div
-                      className={`rounded-full bg-gradient-to-br ${getBalloonColor()} shadow-2xl transition-all duration-100 flex items-center justify-center animate-float`}
+                      className={`rounded-full bg-gradient-to-br ${getBalloonColor()} shadow-2xl transition-all duration-100 animate-float`}
                       style={{
                         width: `${balloonSize}px`,
                         height: `${balloonSize * 1.2}px`,
                       }}
-                    >
-                      <div className="text-white font-bold text-xl">
-                        {potentialReturn}%
-                      </div>
-                    </div>
+                    />
                   ) : (
                     <div className="text-center animate-scale-in">
                       {riskLevel && (
@@ -212,7 +208,7 @@ const RiskGameSection = () => {
                 </div>
 
                 {/* Controls */}
-                {!hasPopped ? (
+                {!hasPopped && (
                   <div className="w-full space-y-4">
                     <Button
                       variant="hero"
@@ -223,24 +219,16 @@ const RiskGameSection = () => {
                       onMouseLeave={handleStopInflating}
                       onTouchStart={handleStartInflating}
                       onTouchEnd={handleStopInflating}
+                      disabled={gameCompleted}
                     >
-                      {!gameStarted ? "Commencer" : isInflating ? "Gonfler..." : "Maintenir appuyé"}
+                      {!gameStarted ? "Commencer le test" : isInflating ? "Gonfler..." : "Maintenir appuyé"}
                     </Button>
                     {gameStarted && (
                       <p className="text-center text-sm text-background/60">
-                        Relâchez quand vous voulez sécuriser votre gain
+                        Relâchez quand vous pensez avoir atteint votre limite
                       </p>
                     )}
                   </div>
-                ) : (
-                  <Button
-                    variant="premium"
-                    size="lg"
-                    className="w-full"
-                    onClick={resetGame}
-                  >
-                    Réessayer
-                  </Button>
                 )}
               </div>
             </Card>
@@ -283,14 +271,17 @@ const RiskGameSection = () => {
                   </div>
                 </>
               ) : (
-                <div className="p-6 bg-background/5 backdrop-blur-sm rounded-lg border border-bnp-gold/20 animate-fade-in">
-                  <h3 className="text-2xl font-bold text-background mb-4">
-                    Profil : {riskLevel}
-                  </h3>
-                  <p className="text-background/80 leading-relaxed mb-6">
-                    {getRiskDescription(riskLevel)}
-                  </p>
-                  <div className="mb-6 p-4 bg-bnp-gold/10 rounded-lg">
+                <div className="p-6 bg-background/5 backdrop-blur-sm rounded-lg border border-bnp-gold/20 animate-fade-in space-y-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-background mb-2">
+                      Profil : {riskLevel}
+                    </h3>
+                    <p className="text-background/80 leading-relaxed">
+                      {getRiskDescription(riskLevel)}
+                    </p>
+                  </div>
+                  
+                  <div className="p-4 bg-bnp-gold/10 rounded-lg">
                     <h4 className="text-sm font-semibold text-background mb-2">Votre performance</h4>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
@@ -303,9 +294,27 @@ const RiskGameSection = () => {
                       </div>
                     </div>
                   </div>
-                  <Button variant="hero" className="w-full">
-                    Voir mes investissements recommandés
-                  </Button>
+
+                  <div className="p-5 bg-bnp-gold/20 rounded-lg border-2 border-bnp-gold/40">
+                    <div className="flex items-start gap-3 mb-4">
+                      <TrendingUp className="w-6 h-6 text-bnp-gold flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-bold text-background mb-1">
+                          Affinez votre profil investisseur
+                        </h4>
+                        <p className="text-sm text-background/80">
+                          Répondez à notre questionnaire personnalisé pour obtenir des recommandations d'investissement parfaitement adaptées à votre situation et vos objectifs.
+                        </p>
+                      </div>
+                    </div>
+                    <Button variant="hero" className="w-full shadow-elegant" size="lg">
+                      Compléter mon profil maintenant
+                    </Button>
+                  </div>
+
+                  <p className="text-xs text-center text-background/50">
+                    🔒 Vos données sont strictement confidentielles
+                  </p>
                 </div>
               )}
             </div>
