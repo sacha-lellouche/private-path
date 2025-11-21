@@ -49,16 +49,23 @@ export default {
         },
         "bnp-green": {
           DEFAULT: "hsl(var(--bnp-green))",
+          dark: "hsl(var(--bnp-green-dark))",
           light: "hsl(var(--bnp-green-light))",
         },
         "bnp-gold": {
           DEFAULT: "hsl(var(--bnp-gold))",
           light: "hsl(var(--bnp-gold-light))",
         },
+        navy: "hsl(var(--navy))",
+      },
+      fontFamily: {
+        'serif': ['Cormorant Garamond', 'serif'],
+        'sans': ['Inter', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
         'gradient-gold': 'var(--gradient-gold)',
+        'gradient-hero': 'var(--gradient-hero)',
         'gradient-subtle': 'var(--gradient-subtle)',
       },
       boxShadow: {
