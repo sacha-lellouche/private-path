@@ -16,7 +16,7 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
   const [exploded, setExploded] = useState(false);
   const [potentialReturn, setPotentialReturn] = useState(5);
   const [riskLevel, setRiskLevel] = useState<RiskProfile | null>(null);
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(true);
   const [inflationTime, setInflationTime] = useState(0);
   const inflationTimeRef = useRef(0);
   const startTimeRef = useRef(0);
@@ -97,18 +97,12 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
   };
 
   const startInflating = () => {
-    if (!gameStarted) {
-      setGameStarted(true);
-      return;
-    }
-    if (!hasPopped && gameStarted) {
+    if (!hasPopped) {
       setIsInflating(true);
     }
   };
 
   const stopInflating = () => {
-    if (!gameStarted) return;
-    
     if (!hasPopped && isInflating) {
       setIsInflating(false);
       setHasPopped(true);
@@ -119,10 +113,8 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
   };
 
   const getBalloonColor = () => {
-    if (hasPopped) return exploded ? "#ef4444" : "#10b981";
-    if (balloonSize < 70) return "#10b981";
-    if (balloonSize < 140) return "#f59e0b";
-    return "#ef4444";
+    if (hasPopped) return exploded ? "#ef4444" : "#13422F";
+    return "#13422F";
   };
 
   const getRiskBadgeVariant = () => {
@@ -141,26 +133,21 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
     <div className="max-w-4xl mx-auto">
       <Card className="p-8 md:p-12 bg-background/80 backdrop-blur-sm border-bnp-green/20">
         {/* Header */}
-        {!gameStarted && (
-          <div className="text-center space-y-6 mb-12 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bnp-gold/10 border border-bnp-gold/30">
-              <Sparkles className="w-4 h-4 text-bnp-gold" />
-              <span className="text-sm font-medium text-foreground">Étape 1 : Évaluation ludique</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-serif font-semibold text-foreground">
-              Le Ballon des Opportunités
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Gonflez le ballon pour maximiser votre rendement. Mais attention : plus vous gonflez, 
-              plus le risque d'explosion augmente !
-            </p>
-            <Badge variant="outline" className="text-destructive border-destructive/30 bg-destructive/5">
-              ⚠️ Ce test ne peut être réalisé qu'une seule fois
-            </Badge>
+        <div className="text-center space-y-6 mb-12 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bnp-gold/10 border border-bnp-gold/30">
+            <Sparkles className="w-4 h-4 text-bnp-gold" />
+            <span className="text-sm font-medium text-foreground">Étape 1 : Évaluation ludique</span>
           </div>
-        )}
+          <h1 className="text-4xl md:text-5xl font-serif font-semibold text-foreground">
+            Le Ballon des Opportunités
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Gonflez le ballon pour maximiser votre rendement. Mais attention : plus vous gonflez, 
+            plus le risque d'explosion augmente !
+          </p>
+        </div>
 
-        {gameStarted && !hasPopped && (
+        {!hasPopped && (
           <div className="text-center mb-8 animate-fade-in">
             <h2 className="text-3xl font-serif font-semibold text-foreground mb-2">
               Jusqu'où irez-vous ?
@@ -207,7 +194,7 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
           </div>
 
           {/* Stats */}
-          {!hasPopped && gameStarted && (
+          {!hasPopped && (
             <div className="flex gap-6 animate-fade-in">
               <div className="text-center">
                 <div className="text-3xl font-bold text-bnp-gold">{potentialReturn}%</div>
@@ -225,41 +212,28 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
           {/* Controls */}
           {!hasPopped && (
             <div className="flex flex-col items-center gap-4 w-full max-w-md">
-              {!gameStarted ? (
-                <Button
-                  size="lg"
-                  variant="hero"
-                  className="w-full text-lg py-6"
-                  onClick={startInflating}
-                >
-                  Commencer le jeu
-                </Button>
-              ) : (
-                <>
-                  <Button
-                    size="lg"
-                    variant="hero"
-                    className="w-full text-lg py-6 select-none touch-none"
-                    onMouseDown={startInflating}
-                    onMouseUp={stopInflating}
-                    onMouseLeave={stopInflating}
-                    onTouchStart={(e) => {
-                      e.preventDefault();
-                      startInflating();
-                    }}
-                    onTouchEnd={(e) => {
-                      e.preventDefault();
-                      stopInflating();
-                    }}
-                    onTouchCancel={stopInflating}
-                  >
-                    Maintenez pour gonfler
-                  </Button>
-                  <p className="text-sm text-muted-foreground text-center">
-                    Relâchez quand vous le souhaitez pour sécuriser votre gain
-                  </p>
-                </>
-              )}
+              <Button
+                size="lg"
+                variant="hero"
+                className="w-full text-lg py-6 select-none touch-none"
+                onMouseDown={startInflating}
+                onMouseUp={stopInflating}
+                onMouseLeave={stopInflating}
+                onTouchStart={(e) => {
+                  e.preventDefault();
+                  startInflating();
+                }}
+                onTouchEnd={(e) => {
+                  e.preventDefault();
+                  stopInflating();
+                }}
+                onTouchCancel={stopInflating}
+              >
+                Maintenez pour gonfler
+              </Button>
+              <p className="text-sm text-muted-foreground text-center">
+                Relâchez quand vous le souhaitez pour sécuriser votre gain
+              </p>
             </div>
           )}
 
