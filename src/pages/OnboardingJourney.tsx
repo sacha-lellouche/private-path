@@ -16,6 +16,7 @@ export interface UserProfile {
   horizon: string[];
   reactionToCrisis: string;
   knownAssets: string[];
+  preferredSectors: string[];
   gameScore: number;
   diversificationScore: number;
   riskTolerance: number;
@@ -40,6 +41,7 @@ const OnboardingJourney = () => {
       horizon: prev?.horizon || [],
       reactionToCrisis: prev?.reactionToCrisis || "",
       knownAssets: prev?.knownAssets || [],
+      preferredSectors: prev?.preferredSectors || [],
     }));
     setTimeout(() => setStep("game2"), 1000);
   };
