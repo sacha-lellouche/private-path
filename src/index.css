@@ -9,49 +9,49 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 156 55% 17%;
+    --foreground: 156 79% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 156 55% 17%;
+    --card-foreground: 156 79% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 156 55% 17%;
+    --popover-foreground: 156 79% 12%;
 
-    --primary: 156 55% 17%;
+    --primary: 156 100% 29%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 160 10% 92%;
-    --secondary-foreground: 156 55% 17%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 156 79% 12%;
 
-    --muted: 160 10% 96%;
-    --muted-foreground: 160 10% 45%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 41 39% 45%;
-    --accent-foreground: 156 55% 17%;
+    --accent: 38 34% 61%;
+    --accent-foreground: 156 79% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 160 10% 88%;
-    --input: 160 10% 88%;
-    --ring: 156 55% 17%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 156 100% 29%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --bnp-green: 156 55% 17%;
-    --bnp-green-dark: 156 55% 17%;
-    --bnp-green-light: 156 45% 25%;
-    --bnp-gold: 41 39% 45%;
-    --bnp-gold-light: 41 45% 55%;
-    --navy: 210 45% 20%;
+    --bnp-green: 156 100% 29%;
+    --bnp-green-dark: 156 79% 12%;
+    --bnp-green-light: 156 60% 35%;
+    --bnp-gold: 38 34% 61%;
+    --bnp-gold-light: 38 45% 70%;
+    --bnp-navy: 192 100% 15%;
+    --bnp-dark: 156 79% 12%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(156 55% 17%) 0%, hsl(156 55% 20%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(41 39% 45%) 0%, hsl(41 45% 55%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(156 55% 17%) 0%, hsl(156 50% 22%) 50%, hsl(156 55% 17%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(160 10% 96%) 100%);
+    --gradient-bnp-green: linear-gradient(135deg, hsl(156 100% 29%) 0%, hsl(152 65% 35%) 100%);
+    --gradient-bnp-gold: linear-gradient(135deg, hsl(38 34% 61%) 0%, hsl(38 45% 70%) 100%);
+    --gradient-bnp-dark: linear-gradient(135deg, hsl(156 79% 12%) 0%, hsl(192 100% 15%) 100%);
     
-    --shadow-elegant: 0 4px 20px -2px hsl(156 55% 17% / 0.15);
-    --shadow-glow: 0 0 30px hsl(41 39% 45% / 0.3);
+    --shadow-elegant: 0 4px 20px -2px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 30px hsl(38 34% 61% / 0.3);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -98,7 +98,24 @@ All colors MUST be HSL.
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
