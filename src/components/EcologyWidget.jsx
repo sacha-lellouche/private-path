@@ -11,6 +11,8 @@ function EcologyWidget() {
     treesEquivalent: 92350,
     renewableEnergy: 2400, // MWh
     waterSaved: 145000, // m³
+    flightsEquivalent: 2000, // vols Paris-New York
+    earthToursEquivalent: 450, // tours de la terre en voiture
   };
 
   // Pourcentage de remplissage de la feuille
@@ -263,6 +265,30 @@ function EcologyWidget() {
               </div>
               <div className="text-xs text-gray-600">
                 Grâce à vos investissements dans les énergies vertes
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg p-4 border border-amber-200">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-amber-700 mb-1">
+                  {ecologyData.flightsEquivalent.toLocaleString('fr-FR')}
+                </div>
+                <div className="text-xs text-gray-700 font-medium">
+                  vols Paris-New York économisés
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-sky-100 to-blue-100 rounded-lg p-4 border border-sky-200">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-sky-700 mb-1">
+                  {ecologyData.earthToursEquivalent}
+                </div>
+                <div className="text-xs text-gray-700 font-medium">
+                  tours de la terre en voiture
+                </div>
               </div>
             </div>
           </div>
