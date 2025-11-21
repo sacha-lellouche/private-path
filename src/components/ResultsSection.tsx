@@ -146,7 +146,7 @@ const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
               className="gap-2 text-xl px-12 py-7 hover:scale-105 transition-all duration-300"
               onClick={onContinue}
             >
-              Accéder à mon dashboard
+              Suite
               <ArrowRight className="w-6 h-6" />
             </Button>
           </div>

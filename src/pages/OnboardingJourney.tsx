@@ -4,6 +4,7 @@ import BalloonGame from "@/components/BalloonGame";
 import WheelGame from "@/components/WheelGame";
 import Questionnaire from "@/components/Questionnaire";
 import ResultsSection from "@/components/ResultsSection";
+import OnboardingChoice from "@/components/OnboardingChoice";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
@@ -22,7 +23,7 @@ export interface UserProfile {
 
 const OnboardingJourney = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState<"game1" | "game2" | "questionnaire" | "results">("game1");
+  const [step, setStep] = useState<"game1" | "game2" | "questionnaire" | "results" | "choice">("game1");
   const [riskProfile, setRiskProfile] = useState<RiskProfile | null>(null);
   const [diversificationScore, setDiversificationScore] = useState(0);
   const [riskTolerance, setRiskTolerance] = useState(0);
@@ -63,6 +64,10 @@ const OnboardingJourney = () => {
   };
 
   const handleResultsComplete = () => {
+    setStep("choice");
+  };
+
+  const handleChoiceComplete = () => {
     navigate("/dashboard");
   };
 
@@ -104,14 +109,14 @@ const OnboardingJourney = () => {
             }}
             disabled={step === "game1"}
             className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-              step === "game2" ? "bg-bnp-gold text-bnp-green" : (step === "questionnaire" || step === "results" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
+              step === "game2" ? "bg-bnp-gold text-bnp-green" : (step === "questionnaire" || step === "results" || step === "choice" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
             } disabled:cursor-not-allowed`}
           >
             2
           </button>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
-              step === "questionnaire" || step === "results" ? "w-full" : "w-0"
+              step === "questionnaire" || step === "results" || step === "choice" ? "w-full" : "w-0"
             }`} />
           </div>
           <button
@@ -120,14 +125,14 @@ const OnboardingJourney = () => {
             }}
             disabled={step === "game1" || step === "game2"}
             className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-              step === "questionnaire" ? "bg-bnp-gold text-bnp-green" : (step === "results" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
+              step === "questionnaire" ? "bg-bnp-gold text-bnp-green" : (step === "results" || step === "choice" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
             } disabled:cursor-not-allowed`}
           >
             3
           </button>
           <div className="w-8 h-0.5 bg-border">
             <div className={`h-full bg-bnp-gold transition-all duration-500 ${
-              step === "results" ? "w-full" : "w-0"
+              step === "results" || step === "choice" ? "w-full" : "w-0"
             }`} />
           </div>
           <button
@@ -136,10 +141,26 @@ const OnboardingJourney = () => {
             }}
             disabled={step === "game1" || step === "game2" || step === "questionnaire"}
             className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-              step === "results" ? "bg-bnp-gold text-bnp-green" : "bg-muted text-muted-foreground"
+              step === "results" ? "bg-bnp-gold text-bnp-green" : (step === "choice" ? "bg-bnp-green text-background hover:bg-bnp-green/80 cursor-pointer" : "bg-muted text-muted-foreground")
             } disabled:cursor-not-allowed`}
           >
             4
+          </button>
+          <div className="w-8 h-0.5 bg-border">
+            <div className={`h-full bg-bnp-gold transition-all duration-500 ${
+              step === "choice" ? "w-full" : "w-0"
+            }`} />
+          </div>
+          <button
+            onClick={() => {
+              if (step !== "game1" && step !== "game2" && step !== "questionnaire" && step !== "results") setStep("choice");
+            }}
+            disabled={step === "game1" || step === "game2" || step === "questionnaire" || step === "results"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step === "choice" ? "bg-bnp-gold text-bnp-green" : "bg-muted text-muted-foreground"
+            } disabled:cursor-not-allowed`}
+          >
+            5
           </button>
         </div>
       </div>
@@ -165,6 +186,14 @@ const OnboardingJourney = () => {
         
         {step === "results" && userProfile && (
           <ResultsSection profile={userProfile} onContinue={handleResultsComplete} />
+        )}
+        
+        {step === "choice" && (
+          <OnboardingChoice
+            onSelectAdvising={handleChoiceComplete}
+            onSelectEducation={handleChoiceComplete}
+            onSkipToDashboard={handleChoiceComplete}
+          />
         )}
       </div>
     </div>
