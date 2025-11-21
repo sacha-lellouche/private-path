@@ -37,8 +37,7 @@ const TransitionScreen = ({ riskProfile, onContinue }: TransitionScreenProps) =>
                 <div>
                   <h3 className="font-semibold text-background mb-1">Profil de risque identifié</h3>
                   <p className="text-background/80 text-sm">
-                    Vous semblez être un investisseur <strong>{riskProfile}</strong> 
-                    d'après votre comportement dans les jeux.
+                    Vous semblez être un investisseur <strong>{riskProfile}</strong> d'après votre comportement dans les jeux.
                   </p>
                 </div>
               </div>

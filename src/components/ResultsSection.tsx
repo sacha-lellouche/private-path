@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 interface ResultsSectionProps {
   profile: UserProfile;
+  onContinue: () => void;
 }
 
-const ResultsSection = ({ profile }: ResultsSectionProps) => {
-  const navigate = useNavigate();
+const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
 
   const getProfileIcon = () => {
     switch (profile.riskProfile) {
@@ -63,7 +63,7 @@ const ResultsSection = ({ profile }: ResultsSectionProps) => {
   const radarData = [
     { label: "Tolérance au risque", value: profile.riskProfile === "Audacieux" ? 90 : profile.riskProfile === "Équilibré" ? 60 : 30 },
     { label: "Horizon long terme", value: profile.horizon.includes("long") ? 90 : 50 },
-    { label: "Diversification", value: profile.knownAssets.length * 16.6 },
+    { label: "Diversification", value: Math.round(profile.knownAssets.length * 16.6) },
   ];
 
   return (
@@ -184,17 +184,10 @@ const ResultsSection = ({ profile }: ResultsSectionProps) => {
               size="lg"
               variant="hero"
               className="gap-2"
-              onClick={() => navigate("/")}
+              onClick={onContinue}
             >
-              Découvrir tous nos produits
+              Accéder à mon dashboard
               <ArrowRight className="w-5 h-5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="premium"
-              onClick={() => navigate("/")}
-            >
-              Parler à un conseiller
             </Button>
           </div>
 
