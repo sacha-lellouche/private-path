@@ -7,6 +7,8 @@ import EcologyWidget from '../components/EcologyWidget';
 import ProfileIndicator from '../components/ProfileIndicator';
 import InvestmentMap from '../components/InvestmentMap';
 import ProfileMetrics from '../components/ProfileMetrics';
+import PlusValueIndicator from '../components/PlusValueIndicator';
+import PortfolioPositions from '../components/PortfolioPositions';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -69,8 +71,13 @@ function Dashboard() {
       </nav>
 
       <div className="max-w-7xl mx-auto p-8 space-y-8">
-        {/* Profile Indicator */}
-        <ProfileIndicator profile={userProfile} />
+        {/* Profile Indicator and Plus-Value */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <ProfileIndicator profile={userProfile} />
+          </div>
+          <PlusValueIndicator />
+        </div>
 
         {/* Metrics adaptées au profil */}
         <ProfileMetrics profile={userProfile} />
@@ -89,6 +96,9 @@ function Dashboard() {
           </div>
           <PortfolioChart />
         </div>
+
+        {/* Portfolio Positions - Vignettes cliquables */}
+        <PortfolioPositions preferredSectors={userProfile.preferredSectors} />
 
         {/* Investment Map */}
         <InvestmentMap />
