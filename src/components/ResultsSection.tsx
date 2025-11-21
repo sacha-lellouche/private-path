@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Award, TrendingUp, Shield, Target, ArrowRight, Sparkles } from "lucide-react";
 import type { UserProfile } from "@/pages/OnboardingJourney";
 import { useNavigate } from "react-router-dom";
+import turtleIcon from "@/assets/turtle-icon.png";
 
 interface ResultsSectionProps {
   profile: UserProfile;
@@ -85,8 +86,12 @@ const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
       {/* Profile Card */}
       <Card className="p-8 md:p-12 bg-gradient-hero text-white animate-scale-in">
         <div className="text-center space-y-6">
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm">
-            {getProfileIcon()}
+          <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-white/10 backdrop-blur-sm">
+            <img 
+              src={turtleIcon} 
+              alt="Tortue - Symbole de sagesse" 
+              className="w-20 h-20"
+            />
           </div>
           
           <div>
@@ -96,8 +101,11 @@ const ResultsSection = ({ profile, onContinue }: ResultsSectionProps) => {
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-lg">
               Investisseur {profile.riskProfile}
             </h2>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto font-medium drop-shadow-md">
+            <p className="text-xl text-white/90 max-w-2xl mx-auto font-medium drop-shadow-md mb-4">
               {getProfileDescription()}
+            </p>
+            <p className="text-sm text-white/80 max-w-xl mx-auto italic">
+              🐢 La tortue représente la sagesse et l'aversion au risque - Une approche prudente et réfléchie de l'investissement
             </p>
           </div>
 

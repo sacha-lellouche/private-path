@@ -49,7 +49,7 @@ const BNPNavigation = () => {
                   <img 
                     src={turtleIcon} 
                     alt="Profil investisseur" 
-                    className="w-6 h-6 animate-float"
+                    className="w-6 h-6"
                   />
                 )}
               </button>
