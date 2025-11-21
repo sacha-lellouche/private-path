@@ -63,6 +63,9 @@ const HeroSection = () => {
               variant="hero" 
               size="lg"
               className="group"
+              onClick={() => {
+                document.getElementById('risk-game')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               Commencez votre parcours
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -70,6 +73,9 @@ const HeroSection = () => {
             <Button 
               variant="premium" 
               size="lg"
+              onClick={() => {
+                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               Découvrir nos solutions
             </Button>
