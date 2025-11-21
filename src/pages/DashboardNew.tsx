@@ -3,7 +3,7 @@ import { TrendingUp } from "lucide-react";
 import BNPNavigation from "@/components/BNPNavigation";
 import PortfolioStats from "@/components/PortfolioStats";
 import PortfolioChartSection from "@/components/PortfolioChartSection";
-import DevelopmentWidget from "@/components/DevelopmentWidget";
+import WorldMapWidget from "@/components/WorldMapWidget";
 import EcologyWidget from "@/components/EcologyWidget";
 
 const DashboardNew = () => {
@@ -38,7 +38,7 @@ const DashboardNew = () => {
         <div>
           <h2 className="text-2xl font-bold text-bnp-dark mb-6">Impact de vos investissements</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <DevelopmentWidget />
+            <WorldMapWidget />
             <EcologyWidget />
           </div>
         </div>
