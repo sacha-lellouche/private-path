@@ -99,12 +99,17 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
   const startInflating = () => {
     if (!gameStarted) {
       setGameStarted(true);
+      return;
     }
-    setIsInflating(true);
+    if (!hasPopped && gameStarted) {
+      setIsInflating(true);
+    }
   };
 
   const stopInflating = () => {
-    if (!hasPopped) {
+    if (!gameStarted) return;
+    
+    if (!hasPopped && isInflating) {
       setIsInflating(false);
       setHasPopped(true);
       const currentTime = (Date.now() - startTimeRef.current) / 1000;
@@ -220,23 +225,40 @@ const BalloonGame = ({ onComplete }: BalloonGameProps) => {
           {/* Controls */}
           {!hasPopped && (
             <div className="flex flex-col items-center gap-4 w-full max-w-md">
-              <Button
-                size="lg"
-                variant="hero"
-                className="w-full text-lg py-6 select-none touch-none"
-                onMouseDown={startInflating}
-                onMouseUp={stopInflating}
-                onMouseLeave={stopInflating}
-                onTouchStart={startInflating}
-                onTouchEnd={stopInflating}
-                onTouchCancel={stopInflating}
-              >
-                {gameStarted ? "Maintenez pour gonfler" : "Commencer le jeu"}
-              </Button>
-              {gameStarted && (
-                <p className="text-sm text-muted-foreground text-center">
-                  Relâchez quand vous le souhaitez pour sécuriser votre gain
-                </p>
+              {!gameStarted ? (
+                <Button
+                  size="lg"
+                  variant="hero"
+                  className="w-full text-lg py-6"
+                  onClick={startInflating}
+                >
+                  Commencer le jeu
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    size="lg"
+                    variant="hero"
+                    className="w-full text-lg py-6 select-none touch-none"
+                    onMouseDown={startInflating}
+                    onMouseUp={stopInflating}
+                    onMouseLeave={stopInflating}
+                    onTouchStart={(e) => {
+                      e.preventDefault();
+                      startInflating();
+                    }}
+                    onTouchEnd={(e) => {
+                      e.preventDefault();
+                      stopInflating();
+                    }}
+                    onTouchCancel={stopInflating}
+                  >
+                    Maintenez pour gonfler
+                  </Button>
+                  <p className="text-sm text-muted-foreground text-center">
+                    Relâchez quand vous le souhaitez pour sécuriser votre gain
+                  </p>
+                </>
               )}
             </div>
           )}
