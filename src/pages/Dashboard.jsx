@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, Home, TrendingUpIcon, User } from 'lucide-react';
 import PortfolioChart from '../components/PortfolioChart';
 import DevelopmentWidget from '../components/DevelopmentWidget';
 import EcologyWidget from '../components/EcologyWidget';
+import ProfileIndicator from '../components/ProfileIndicator';
+import InvestmentMap from '../components/InvestmentMap';
+import ProfileMetrics from '../components/ProfileMetrics';
 
 function Dashboard() {
   const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    // Check if user has a profile
+    const storedProfile = localStorage.getItem('userProfile');
+    if (!storedProfile) {
+      // No profile, redirect to onboarding
+      navigate('/parcours');
+    } else {
+      setUserProfile(JSON.parse(storedProfile));
+    }
+  }, [navigate]);
+
+  if (!userProfile) {
+    return null; // Loading or redirecting
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -50,6 +69,12 @@ function Dashboard() {
       </nav>
 
       <div className="max-w-7xl mx-auto p-8 space-y-8">
+        {/* Profile Indicator */}
+        <ProfileIndicator profile={userProfile} />
+
+        {/* Metrics adaptées au profil */}
+        <ProfileMetrics profile={userProfile} />
+
         {/* Section du graphique de portefeuille */}
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="flex items-center justify-between mb-6">
@@ -64,6 +89,9 @@ function Dashboard() {
           </div>
           <PortfolioChart />
         </div>
+
+        {/* Investment Map */}
+        <InvestmentMap />
 
         {/* Section des widgets d'impact */}
         <div>
